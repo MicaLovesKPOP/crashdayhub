@@ -1,0 +1,130 @@
+html {
+  height: 100%;
+}
+
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  z-index:5;
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+#main{
+  text-align: center;
+}
+
+.credit{
+    position: fixed; 
+    background:lightgray; 
+    width:100%;
+    bottom:0;
+    margin-left: -8px;
+    text-align: center;
+}
+
+.button{
+  z-index:1;
+  position: relative; 
+  border-top: 5px solid #777777;
+  border-left: 5px solid #e0e0e0;
+  border-right: 5px solid #e0e0e0;
+  border-bottom: 5px solid darkred;
+  background-color: lightgrey;
+  display: inline-block;
+  text-align: center;
+  padding: 20px;
+  margin: -2px;
+  margin-top: 50px;
+  opacity: 0.75;
+
+  -moz-transition: background-color 1s;
+  -webkit-transition: background-color 1s;
+  -o-transition: background-color 1s;
+}
+
+.button p{
+  border-top: 2px black;
+  margin: 16px;
+  clear: both;
+  text-align: center;
+  opacity: 1;
+  text
+}
+
+.button a:link, a:visited, a:active, a:hover{
+  text-decoration: none;
+  color:black;
+}
+
+.button:hover{
+  background-color: #777777;
+  -moz-transition: background-color 0.33s;
+  -webkit-transition: background-color 0.33s;
+  -o-transition: background-color 0.33s;
+}
+
+.button:active{
+  background-color: darkred;
+  -moz-transition: background-color 0.33s;
+  -webkit-transition: background-color 0.33s;
+  -o-transition: background-color 0.33s;
+}
+
+.button2{
+  z-index:1;
+  position: relative; 
+  border-top: 5px solid #777777;
+  border-left: 5px solid #e0e0e0;
+  border-right: 5px solid #e0e0e0;
+  border-bottom: 5px solid darkred;
+  background-color: lightgrey;
+  display: inline-block;
+  text-align: center;
+  padding: 20px;
+  margin: -2px;
+  opacity: 0.75;
+
+  -moz-transition: background-color 1s;
+  -webkit-transition: background-color 1s;
+  -o-transition: background-color 1s;
+}
+
+.button2 p{
+  border-top: 2px black;
+  margin: 16px;
+  clear: both;
+  text-align: center;
+  opacity: 1;
+  text
+}
+
+.button2 a:link, a:visited, a:active, a:hover{
+  text-decoration: none;
+  color:black;
+}
+
+.button2:hover{
+  background-color: #777777;
+  -moz-transition: background-color 0.33s;
+  -webkit-transition: background-color 0.33s;
+  -o-transition: background-color 0.33s;
+}
+
+.button2:active{
+  background-color: darkred;
+  -moz-transition: background-color 0.33s;
+  -webkit-transition: background-color 0.33s;
+  -o-transition: background-color 0.33s;
+}
