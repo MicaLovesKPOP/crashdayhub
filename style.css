@@ -27,21 +27,28 @@ html {
 
 .credit{
     position: fixed; 
-    background:lightgray; 
-    width:100%;
-    bottom:0;
+    background:dimgray; 
+    opacity: 0.75;
+    width:101%;
     margin-left: -8px;
+    bottom:0;
+	font-size: 10px;
+	color: black;
     text-align: center;
+}
+
+.credit a:link, a:visited, a:active, a:hover{
+	color: black
 }
 
 .button{
   z-index:1;
   position: relative; 
-  border-top: 5px solid #777777;
-  border-left: 5px solid #e0e0e0;
-  border-right: 5px solid #e0e0e0;
-  border-bottom: 5px solid darkred;
-  background-color: lightgrey;
+  border-top: 5px solid #888888;
+  border-left: 5px solid #999999;
+  border-right: 5px solid #555555;
+  border-bottom: 5px solid #666666;
+  background-color: darkgray;
   display: inline-block;
   text-align: center;
   padding: 20px;
@@ -85,15 +92,16 @@ html {
 .button2{
   z-index:1;
   position: relative; 
-  border-top: 5px solid #777777;
-  border-left: 5px solid #e0e0e0;
-  border-right: 5px solid #e0e0e0;
-  border-bottom: 5px solid darkred;
-  background-color: lightgrey;
+  border-top: 5px solid #888888;
+  border-left: 5px solid #999999;
+  border-right: 5px solid #555555;
+  border-bottom: 5px solid #666666;
+  background-color: darkgray;
   display: inline-block;
   text-align: center;
   padding: 20px;
   margin: -2px;
+  margin-top: 2px;
   opacity: 0.75;
 
   -moz-transition: background-color 1s;
