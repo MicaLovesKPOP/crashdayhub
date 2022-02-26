@@ -162,6 +162,24 @@ iframe {
   /* border:2px solid red; */
 }
 
+a {
+  position: relative;
+  width:100%;
+  list-style-type:none;
+  font-family: 'Rubik', sans-serif;
+  text-transform: uppercase;
+  text-shadow: auto;
+  text-decoration: none;
+  font-style:italic;
+  -webkit-text-stroke:0.031em black;  
+  color:#B9B0AB;
+}
+
+a:hover, a:focus, a:active {
+  color:#E1DEDD;
+  outline:none;
+}
+
 ul {
   position: relative;
   width:100%;
@@ -179,7 +197,7 @@ li {
   vertical-align: center;
 }
 
-li span {
+li span, :focus {
   align-items: center;
   transform-origin: left;
   left: 0;
@@ -192,7 +210,7 @@ li span {
   /* border:2px solid red; *//* for debugging */
 }
 
-li:hover span {
+li:hover span, :focus {
   min-height:1.983em;
   max-height:1.983em;
   transform-origin:left;
@@ -213,8 +231,9 @@ li:hover span {
 100% {font-size:114%}
 }
 
-span {
-  display:inline-block;
+li:hover span .numb, li:focus span .numb {
+  animation:none;
+  -webkit-animation:none;
 }
 
 /* junk
