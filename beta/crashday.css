@@ -11,7 +11,7 @@ body {
 
 /* loading screen fade-in-out */ 
 .menu-1 {
-background-image: url(./media/titlebg.webp);
+background-image: url(./resources/media/titlebg.webp);
 background-repeat: no-repeat;
 background-position:center;
 padding-top: 50vh;
@@ -94,7 +94,7 @@ max-height: auto;
 }
 
 .menu-2-blinds {
-  background-image: url(./media/blinds2.webp);
+  background-image: url(./resources/media/blinds2.webp);
   background-size: cover;
   background-repeat: no-repeat;
   background-position:center;
