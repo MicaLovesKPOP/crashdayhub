@@ -251,7 +251,6 @@ li:hover, :focus {
   max-height:1.983em;
   transition-timing-function:ease-in-out;
   -webkit-transition-timing-function:ease-in-out;
-  end of borked hatches */
 } /* text-size-adjust */
 @-webkit-keyframes zoomzoom {
 0% {font-size:114%}
