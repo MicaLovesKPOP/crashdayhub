@@ -241,8 +241,7 @@ li span, :focus {
   /* border:2px solid red; *//* for debugging */
 }
 
-/* li:hover span, :focus { */
-li:focus span {
+li:hover span, :focus {
   min-height:1.983em;
   max-height:1.983em;
   transform-origin:left;
@@ -263,7 +262,7 @@ li:focus span {
 100% {font-size:114%}
 }
 
-li:hover span .numb, li:focus span .numb {
+li:hover span .numb, li:focus .numb {
   animation:none;
   -webkit-animation:none;
 }
