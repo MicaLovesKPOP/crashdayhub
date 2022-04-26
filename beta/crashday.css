@@ -241,7 +241,8 @@ li span, :focus {
   /* border:2px solid red; *//* for debugging */
 }
 
-li:hover span, :focus span {
+/* li:hover span, :focus { */
+li:focus {
   min-height:1.983em;
   max-height:1.983em;
   transform-origin:left;
