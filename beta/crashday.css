@@ -114,10 +114,10 @@ max-height: auto;
 }
 
 .main-menu {
-  -webkit-animation-delay: 6.5s;
-  animation-delay: 6.5s;
-  -webkit-animation-duration: 48s;
-  animation-duration: 48s;
+  -webkit-animation-delay: 5.5s;
+  animation-delay: 5.5s;
+  -webkit-animation-duration: 49s;
+  animation-duration: 49s;
   -webkit-animation-name: fadeInYT;
   animation-name: fadeInYT;
   -webkit-animation-fill-mode: both;
