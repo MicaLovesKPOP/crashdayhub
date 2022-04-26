@@ -247,15 +247,15 @@ li span, :hover :focus {
 }
 
 li:hover, :focus {
+  transform-origin:left;
+  animation: zoomzoom 1s infinite;
+  -webkit-transform-origin:left;
+  -webkit-animation: zoomzoom 1s infinite;
   /* borked hatches
   
   min-height:1.983em;
   max-height:1.983em;
-  transform-origin:left;
-  animation: zoomzoom 1s infinite;
   transition-timing-function:ease-in-out;
-  -webkit-transform-origin:left;
-  -webkit-animation: zoomzoom 1s infinite;
   -webkit-transition-timing-function:ease-in-out;
   
   end of borked hatches */
