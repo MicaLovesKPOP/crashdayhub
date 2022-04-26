@@ -233,12 +233,8 @@ li span, :hover :focus {
   align-items: center;
   transform-origin: left;
   left: 0;
-  /* borked hatches
-  
   min-height:1.983em;
   max-height:1.983em;
-  
-  end of borked hatches */
   white-space: normal;
   word-break: break-word;
   display: flex;
@@ -251,13 +247,10 @@ li:hover, :focus {
   animation: zoomzoom 1s infinite;
   -webkit-transform-origin:left;
   -webkit-animation: zoomzoom 1s infinite;
-  /* borked hatches
-  
   min-height:1.983em;
   max-height:1.983em;
   transition-timing-function:ease-in-out;
   -webkit-transition-timing-function:ease-in-out;
-  
   end of borked hatches */
 } /* text-size-adjust */
 @-webkit-keyframes zoomzoom {
