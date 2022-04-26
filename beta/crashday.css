@@ -229,7 +229,7 @@ li {
   vertical-align: center;
 }
 
-li span:focus {
+li span, :focus {
   align-items: center;
   transform-origin: left;
   left: 0;
@@ -242,7 +242,7 @@ li span:focus {
   /* border:2px solid red; *//* for debugging */
 }
 
-li:hover, :focus {
+li:hover, li:focus {
   transform-origin:left;
   animation: zoomzoom 1s infinite;
   -webkit-transform-origin:left;
