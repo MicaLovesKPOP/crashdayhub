@@ -228,7 +228,7 @@ li {
   vertical-align: center;
 }
 
-li span, :focus {
+li:hover, :focus {
   align-items: center;
   transform-origin: left;
   left: 0;
