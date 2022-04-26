@@ -242,7 +242,7 @@ li span, :focus {
 }
 
 /* li:hover span, :focus { */
-li:focus {
+li:focus span {
   min-height:1.983em;
   max-height:1.983em;
   transform-origin:left;
