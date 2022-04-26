@@ -242,7 +242,7 @@ li span, :focus {
   /* border:2px solid red; *//* for debugging */
 }
 
-li:hover, li:focus {
+li:hover, :focus {
   transform-origin:left;
   animation: zoomzoom 1s infinite;
   -webkit-transform-origin:left;
