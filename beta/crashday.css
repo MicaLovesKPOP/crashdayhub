@@ -25,6 +25,7 @@ animation-name: fadeInOut;
 animation-fill-mode: both;
 background-size:cover;
 min-width: 70%;
+max-width: auto;
 min-height: auto;
 max-height: 100%;
 }  
