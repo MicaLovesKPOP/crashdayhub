@@ -230,7 +230,7 @@ li {
   vertical-align: center;
 }
 
-li:span, :focus {
+li span, focus {
   align-items: center;
   transform-origin: left;
   left: 0;
