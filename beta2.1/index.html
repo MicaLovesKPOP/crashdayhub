@@ -1,1 +1,88 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <title>Crashday Hub [BETA2.1]</title>
+    </head>
+
+    <body>
+    
+        <!-- loading screen -->
+        <div id="anim-loading1"></div>
+
+        <!-- main menu fade-in -->
+        <div id = "anim-loading2" class = "vignette fadeIn"></div>
+
+        <!-- main menu -->
+        <div class="main-menu" style="z-index: -99">
+            <!-- main menu background video -->
+        <div class="iframe-container">
+            <iframe tabindex="-1" frameborder="0" height="100%" width="100%" 
+            src="https://www.youtube.com/embed/videoseries?controls=0&amp;list=PLn8rM6JdMMiNrtABEbSfjxSRVmvxKHo7v&autoplay=1&mute=1&loop=0&controls=0&showinfo=0&autohide=1">
+            </iframe>
+        </div>
+        </div>
+
+        <!-- additional main menu overlay -->
+        <div id="anim-loading3" class="menu-2 menu-2-blinds">
+
+            <!-- landing menu -->    
+            <div class="flexbox-container">
+                <div class="flexbox-main" id="main">
+                    <ul>
+                        <li><div class=flexbox-item><a href="https://discord.me/crashday" target="_blank" rel="noreferrer noopener"><span data-char="Official Discord">Official Discord</span></a></div></li>
+                        <li><div class=flexbox-item><a href="https://steamcommunity.com/app/508980/workshop/" target="_blank" rel="noreferrer noopener"><span data-char="Steam Workshop">Steam Workshop</span></a></div></li>
+                        <li><div class=flexbox-item onclick="openTools()"><a href="#Tools" onclick="openTools()"><span data-char="Tools">Tools</span></a></div></li>
+                        <li><div class=flexbox-item onclick="openResources()"><a href="#Resources"><span data-char="Resources">Resources</span></a></div></li>
+                        <li><div class=flexbox-item onclick="openOptions()"><a href="#Options"><span data-char="Options">Options</span></a></div></li>
+                    </ul>   
+                </div>
+
+                <!-- submenu -->
+                <div class="flexbox-tools" id="tools">
+                    <ul>
+                        <li><div class=flexbox-item><a href="https://steamcommunity.com/app/508980/discussions/0/1733213724899660076/" target="_blank" rel="noreferrer noopener"><span data-char="3D Track Editor">3D Track Editor</span></a></div></li>
+                        <li><div class=flexbox-item><a href="https://github.com/wurunduk/crashday-smart-launcher/releases/latest" target="_blank" rel="noreferrer noopener"><span data-char="Smart Launcher">Smart Launcher</span></a></div></li>
+                    </ul>
+                </div>
+
+                <!-- submenu -->
+                <div class="flexbox-resources" id="resources">
+                    <ul>
+                        <li><div class=flexbox-item><a href="https://wurunduk.github.io/crashday-sdk/" target="_blank" rel="noreferrer noopener"><span data-char="Crashday SDK">Crashday SDK</span></a></div></li>
+                        <li><div class=flexbox-item><a href="https://crashdaycenter.com/" target="_blank" rel="noreferrer noopener"><span data-char="Modding Guides">Modding Guides</span></a></div></li>
+                        <li><div class=flexbox-item><a href="https://docs.google.com/spreadsheets/d/1-dXl7E2KFRwKLf8ixcD6HMSSu9EfKzN5hGQCQxJ4YOk/edit?usp=sharing" target="_blank" rel="noreferrer noopener"><span data-char="Modding Info">Modding Info</span></a></div></li>
+                        <li><div class=flexbox-item><a href="https://github.com/wurunduk/blender-p3d-import-export/releases/latest" target="_blank" rel="noreferrer noopener"><span data-char=".P3D Blender Plugin">.P3D Blender Plugin</span></a></div></li>
+                    </ul>
+                </div>
+                
+                <!-- submenu -->
+                <div class="flexbox-options" id="options">
+                    <ul>
+                        <li><div class=flexbox-item><li><div class=flexbox-item onclick="switchStateTM()"><a href="#Welcome Screen" onclick="switchStateTM()"><span data-char="Welcome Screen: On">Welcome Screen: On</span></a></div></li>
+                        <li><div class=flexbox-item><li><div class=flexbox-item onclick="switchStateTM()"><a href="#Background Video" onclick="switchStateTM()"><span data-char="Background Video: Play Once">Background Video: Play Once</span></a></div></li>
+                        <li><div class=flexbox-item><li><div class=flexbox-item onclick="switchStateTM()"><a href="#Audio Effects" onclick="switchStateTM()"><span data-char="Audio Effects: Off">Audio Effects: Off</span></a></div></li>
+                        <li><div class=flexbox-item><li><div class=flexbox-item onclick="switchStateTM()"><a href="#Music" onclick="switchStateTM()"><span data-char="Music: Off">Music: Off</span></a></div></li>
+                        <li><div class=flexbox-item><li><div class=flexbox-item onclick="switchStateTM()"><a href="#Cookies" onclick="switchStateTM()"><span data-char="Cookies: Off">Cookies: Off</span></a></div></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    
+        <!-- animated footer -->
+        <footer>
+        </footer>
+
+        <!-- load javascript functionality -->
+        <script src="script.js"></script>
+
+    </body>
+
+</html>
