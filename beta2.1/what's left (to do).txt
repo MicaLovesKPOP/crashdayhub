@@ -1,0 +1,24 @@
+bugs to fix:
+- mouse hover animation
+- tab focus animation
+
+must finalize:
+- finalize triple input support: tab, arrow keys, mouse/touch (that's a big one)
+- finalize back button support: escape key
+
+must add:
+- tab navigation: trap focus
+
+
+
+good to add:
+- user preferences
+- cookies
+- full mouse/touch support: add a visual, clickable back button
+- enhanced experience with viewport aspect ratios far from 16:9 and mobile devices
+
+
+
+nice to add:
+- multiple background videos
+- additional user preference: choice between randomized or user-defined background video

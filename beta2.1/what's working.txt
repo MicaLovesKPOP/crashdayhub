@@ -1,0 +1,29 @@
+keyboard and mouse navigation
+
+what			working?	implementation	comments
+=================================================================================
+
+=overrides=	
+tab>arrows		no
+tab>mouse		no
+arrows>tab		no
+arrows>mouse	yes					too large area, depending
+mouse>tab		no
+mouse>arrows	no
+
+=tab=		
+function		yes		native	
+animation		yes		css, js			
+coloring		yes		css, js			
+trap focus		no		css, js		currently tabs out of website (into browser)
+
+=arrows=		
+function		yes		js			only working on main page
+animation		yes		css, js		^
+coloring		yes		css, js		^
+trap focus		no		css, js		^
+
+=mouse=
+function		yes		native			
+animation		yes		css		
+coloring		yes		css			applies on mouseover only (should remain when still active/focused) or have larger area
