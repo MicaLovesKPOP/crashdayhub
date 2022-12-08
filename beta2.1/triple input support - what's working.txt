@@ -7,9 +7,9 @@ what			working?	implementation	comments
 tab>arrows		no
 tab>mouse		no
 arrows>tab		no
-arrows>mouse	 yes					too large area, depending
+arrows>mouse	   yes					too large area, depending
 mouse>tab		no
-mouse>arrows	 no
+mouse>arrows	   no
 
 =tab=		
 function		yes		native	
