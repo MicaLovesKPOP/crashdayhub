@@ -230,7 +230,7 @@ li {
   vertical-align: center;
 }
 
-li span, li focus {
+li span, :focus {
   align-items: center;
   transform-origin: left;
   left: 0;
@@ -240,7 +240,7 @@ li span, li focus {
   word-break: break-word;
   display: flex;
   vertical-align: center;
-  border:2px solid red; *//* for debugging
+  /* border:2px solid red; *//* for debugging */
 }
 
 li:hover, :focus {
