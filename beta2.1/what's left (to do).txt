@@ -6,10 +6,6 @@ must finalize:
 - finalize triple input support: tab, arrow keys, mouse/touch (that's a big one)
 - finalize back button support: escape key
 
-must add:
-- tab navigation: trap focus
-
-
 
 good to add:
 - user preferences
@@ -22,3 +18,9 @@ good to add:
 nice to add:
 - multiple background videos
 - additional user preference: choice between randomized or user-defined background video
+
+
+===========================================
+
+decided not to add:
+- tab navigation: trap focus
