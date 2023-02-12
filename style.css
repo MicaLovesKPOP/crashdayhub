@@ -23,6 +23,8 @@ html {
 
 #main{
   text-align: center;
+  width: 75vw;
+  margin-top: 50px;
 }
 
 .credit{
@@ -53,7 +55,6 @@ html {
   text-align: center;
   padding: 20px;
   margin: -2px;
-  margin-top: 50px;
   opacity: 0.75;
 
   -moz-transition: background-color 1s;
