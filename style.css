@@ -25,6 +25,7 @@ html {
     margin: 0 auto;
     text-align: center;
     width: 75vw;
+    max-width: 720px;
     margin-top: 50px;
 }
 
