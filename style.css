@@ -29,6 +29,7 @@ html {
     width: 75vw;
     max-width: 720px;
     margin-top: 25vh;
+    padding-bottom: 5vh;
 }
 
 .credit{
