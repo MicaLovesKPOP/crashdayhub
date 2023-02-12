@@ -61,6 +61,9 @@ html {
   padding: 20px;
   margin: -2px;
   opacity: 0.75;
+	
+  aspect-ratio: var(--r);
+  width:min(90%, min(128px, 90vh*(var(--r))));
 
   -moz-transition: background-color 1s;
   -webkit-transition: background-color 1s;
