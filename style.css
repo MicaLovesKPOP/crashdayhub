@@ -48,14 +48,6 @@ html {
 	color: black
 }
 
-div.button {
-  aspect-ratio: var(--r);
-  width:min(90%, min(128px, 90vh*(var(--r))));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .button{
   z-index:1;
   position: relative; 
