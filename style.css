@@ -88,10 +88,10 @@ html {
 }
 
 .button:active{
-  background-color: darkred;
-  -moz-transition: background-color 0.33s;
-  -webkit-transition: background-color 0.33s;
-  -o-transition: background-color 0.33s;
+  background-color: darkgray;
+  -moz-transition: background-color 0.11s;
+  -webkit-transition: background-color 0.11s;
+  -o-transition: background-color 0.11s;
 }
 
 .button2{
@@ -136,8 +136,8 @@ html {
 }
 
 .button2:active{
-  background-color: darkred;
-  -moz-transition: background-color 0.33s;
-  -webkit-transition: background-color 0.33s;
-  -o-transition: background-color 0.33s;
+  background-color: darkgray;
+  -moz-transition: background-color 0.11s;
+  -webkit-transition: background-color 0.11s;
+  -o-transition: background-color 0.11s;
 }
