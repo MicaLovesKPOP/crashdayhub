@@ -26,7 +26,7 @@ html {
     text-align: center;
     width: 75vw;
     max-width: 720px;
-    margin-top: calc(67% - 178px);
+    margin-top: 25vh;
 }
 
 .credit{
