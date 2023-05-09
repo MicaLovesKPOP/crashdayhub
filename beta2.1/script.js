@@ -28,36 +28,50 @@ $(window).keydown(function(e) {
     }
 });
 
-var prevState = []; // initialize state stack
+var currentMenu = 'main';
 
 function openTools() {
-    prevState.push({ id: "tools", display: document.getElementById("tools").style.display });
+    var x = document.getElementById("tools");
     var z = document.getElementById("main");
     z.style.display = "none";
-    document.getElementById("tools").style.display = "flex";
+    x.style.display = "flex";
+    currentMenu = 'tools';
 }
 
 function openResources() {
-    prevState.push({ id: "resources", display: document.getElementById("resources").style.display });
+    var x = document.getElementById("resources");
     var z = document.getElementById("main");
     z.style.display = "none";
-    document.getElementById("resources").style.display = "flex";
+    x.style.display = "flex";
+    currentMenu = 'resources';
 }
 
 function openOptions() {
-    prevState.push({ id: "options", display: document.getElementById("options").style.display });
+    var x = document.getElementById("options");
     var z = document.getElementById("main");
     z.style.display = "none";
-    document.getElementById("options").style.display = "flex";
+    x.style.display = "flex";
+    currentMenu = 'options';
 }
 
-function undoLastChange() {
-    var prevStateObj = prevState.pop();
-    var prevStateElem = document.getElementById(prevStateObj.id);
-    if (prevStateElem) {
-        prevStateElem.style.display = prevStateObj.display;
+function backPage() {
+    if (currentMenu === 'main') {
+        // do nothing, we're already on the main page
+        return;
     }
+    
+    var x = document.getElementById(currentMenu);
+    var z = document.getElementById("main");
+    z.style.display = "flex";
+    x.style.display = "none";
+    currentMenu = 'main';
 }
+
+$(document).keyup(function(e) {
+    if (e.keyCode === 27) {
+        backPage();
+    }
+});
 
 window.addEventListener("keyup", function(e){
     if(e.keyCode == 27) {
