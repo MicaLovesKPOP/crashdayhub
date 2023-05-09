@@ -28,29 +28,42 @@ $(window).keydown(function(e) {
     }
 });
 
+var prevState = []; // initialize state stack
+
 function openTools() {
-    var x = document.getElementById("tools");
+    prevState.push({ id: "tools", display: document.getElementById("tools").style.display });
     var z = document.getElementById("main");
     z.style.display = "none";
-    x.style.display = "flex";
-//    next = liSelected.next();
-//    liSelected = next.addClass('selected');
-//    liSelected = li.eq(0).addClass('selected');
+    document.getElementById("tools").style.display = "flex";
 }
 
 function openResources() {
-    var x = document.getElementById("resources");
+    prevState.push({ id: "resources", display: document.getElementById("resources").style.display });
     var z = document.getElementById("main");
     z.style.display = "none";
-    x.style.display = "flex";
+    document.getElementById("resources").style.display = "flex";
 }
 
 function openOptions() {
-    var x = document.getElementById("options");
+    prevState.push({ id: "options", display: document.getElementById("options").style.display });
     var z = document.getElementById("main");
     z.style.display = "none";
-    x.style.display = "flex";
+    document.getElementById("options").style.display = "flex";
 }
+
+function undoLastChange() {
+    var prevStateObj = prevState.pop();
+    var prevStateElem = document.getElementById(prevStateObj.id);
+    if (prevStateElem) {
+        prevStateElem.style.display = prevStateObj.display;
+    }
+}
+
+window.addEventListener("keyup", function(e){
+    if(e.keyCode == 27) {
+        undoLastChange();
+    }
+}, false);
 
 $(window).mouseover(function() {
     if(liSelected) {
@@ -96,4 +109,4 @@ function trapFocus(element) {
 }
 
 // Makes escape key function as 'page back' function
-window.addEventListener("keyup", function(e){ if(e.keyCode == 27) history.back(); }, false);
+// window.addEventListener("keyup", function(e){ if(e.keyCode == 27) history.back(); }, false);
