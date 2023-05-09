@@ -1,97 +1,119 @@
-var li = $('li');
-var liSelected;
-$(window).keydown(function(e) {
-    if(e.which === 40) {
-        if(liSelected) {
-            liSelected.removeClass('selected');
-            next = liSelected.next();
-            if(next.length > 0) {
-                liSelected = next.addClass('selected');
-            } else {
-                liSelected = li.eq(0).addClass('selected');
-            }
+$(document).ready(function() {
+  var li = $("li");
+  var liSelected;
+  $(window).keydown(function(e) {
+    if (e.which === 40) {
+      if (liSelected) {
+        liSelected.removeClass("selected");
+        next = liSelected.next();
+        if (next.length > 0) {
+          liSelected = next.addClass("selected");
         } else {
-            liSelected = li.eq(0).addClass('selected');
+          liSelected = li.eq(0).addClass("selected");
         }
-    } else if(e.which === 38) {
-        if(liSelected) {
-            liSelected.removeClass('selected');
-            next = liSelected.prev();
-            if(next.length > 0) {
-                liSelected = next.addClass('selected');
-            } else {
-                liSelected = li.eq(4).addClass('selected');
-            }
+      } else {
+        liSelected = li.eq(0).addClass("selected");
+      }
+    } else if (e.which === 38) {
+      if (liSelected) {
+        liSelected.removeClass("selected");
+        next = liSelected.prev();
+        if (next.length > 0) {
+          liSelected = next.addClass("selected");
         } else {
-            liSelected = li.last().addClass('selected');
+          liSelected = li.eq(4).addClass("selected");
         }
+      } else {
+        liSelected = li.last().addClass("selected");
+      }
     }
-});
+  });
 
-var currentMenu = 'main';
+  var currentMenu = "main";
 
-function openTools() {
+  function openTools() {
     var x = document.getElementById("tools");
     var z = document.getElementById("main");
     z.style.display = "none";
     x.style.display = "flex";
-    currentMenu = 'tools';
-}
+    currentMenu = "tools";
+  }
 
-function openResources() {
+  function openResources() {
     var x = document.getElementById("resources");
     var z = document.getElementById("main");
     z.style.display = "none";
     x.style.display = "flex";
-    currentMenu = 'resources';
-}
+    currentMenu = "resources";
+  }
 
-function openOptions() {
+  function openOptions() {
     var x = document.getElementById("options");
     var z = document.getElementById("main");
     z.style.display = "none";
     x.style.display = "flex";
-    currentMenu = 'options';
-}
+    currentMenu = "options";
+  }
 
-function backPage() {
-    if (currentMenu === 'main') {
-        // do nothing, we're already on the main page
-        return;
+  function backPage() {
+    if (currentMenu === "main") {
+      // do nothing, we're already on the main page
+      return;
     }
-    
+
     var x = document.getElementById(currentMenu);
     var z = document.getElementById("main");
     z.style.display = "flex";
     x.style.display = "none";
-    currentMenu = 'main';
-}
+    currentMenu = "main";
+  }
 
-$(document).keyup(function(e) {
+  $(document).keyup(function(e) {
     if (e.keyCode === 27) {
+      backPage();
+    }
+  });
+
+  function undoLastChange() {
+    switch (currentMenu) {
+      case "tools":
         backPage();
+        break;
+      case "resources":
+        backPage();
+        break;
+      case "options":
+        backPage();
+        break;
+      default:
+        // do nothing, we're already on the main page
+        break;
     }
-});
+  }
 
-window.addEventListener("keyup", function(e){
-    if(e.keyCode == 27) {
+  window.addEventListener(
+    "keyup",
+    function(e) {
+      if (e.keyCode == 27) {
         undoLastChange();
-    }
-}, false);
+      }
+    },
+    false
+  );
 
-$(window).mouseover(function() {
-    if(liSelected) {
-        liSelected.removeClass('selected');
-        current = liSelected.current();
-        liSelected = current.addClass('selected');
+  $(window).mouseover(function() {
+    if (liSelected) {
+      liSelected.removeClass("selected");
+      current = liSelected.current();
+      liSelected = current.addClass("selected");
     }
-});
+  });
 
-$(document).keypress(function(e) {
+  $(document).keypress(function(e) {
     if (e.which == 13) {
-        $('li.selected a').trigger('click');
+      $("li.selected a").trigger("click");
     }
-});
+  });
 
 var element = $('div.flexbox-main');
 function trapFocus(element) {
