@@ -83,14 +83,15 @@
         <!-- load javascript functionality -->
         <script src="script.js"></script>
         <script>
-            // Trap focus within the website
-            $(document).on('keydown', function (e) {
-                if (e.keyCode === 9 && !$(e.target).closest('.main-menu').length) {
-                    e.preventDefault();
-                    $('.main-menu').find('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])').first().focus();
-                }
-            });
-        </script>
+    // trap focus within the website
+    document.body.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab' && document.activeElement === document.body) {
+            e.preventDefault();
+            document.querySelector('.main-menu').querySelector('a').focus();
+        }
+    });
+</script>
+
 
     </body>
 
