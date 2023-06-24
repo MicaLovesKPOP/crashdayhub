@@ -1,4 +1,4 @@
-# Crashday Hub (WIP) [![Download](https://img.shields.io/badge/Display-legacy-blue)](https://micaloveskpop.github.io/crashdayhub/) [![Download](https://img.shields.io/badge/Display-BETA-orange)](https://micaloveskpop.github.io/crashdayhub/beta2.1/)
+# Crashday Hub [![Download](https://img.shields.io/badge/Display-legacy-blue)](https://micaloveskpop.github.io/crashdayhub/) [![Download](https://img.shields.io/badge/Display-BETA-orange)](https://micaloveskpop.github.io/crashdayhub/beta2.1/)
 
 A one-stop-shop for the Crashday community
 
