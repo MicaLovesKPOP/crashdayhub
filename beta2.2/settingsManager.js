@@ -1,5 +1,12 @@
 // ./settingsManager.js
 
+// Function to get a future date for cookie expiration (1 year from now)
+function getOneYearFromNow() {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toUTCString();
+}
+
 // Wait for the DOM to fully load before running the script
 document.addEventListener("DOMContentLoaded", () => {
   // Select all elements with the class "setting-link"
@@ -24,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "Music Volume": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
   };
 
+  // Function to update the 'expires' attribute of a cookie
+  function updateCookie(setting, newState) {
+    const expirationDate = getOneYearFromNow();
+    document.cookie = `${setting}=${newState}; expires=${expirationDate}; path=/`;
+  }
+
   // Load settings from cookies
   Object.keys(multiOptionSettingOptions).forEach((setting) => {
     const cookieValue = document.cookie.split('; ').find(row => row.startsWith(`${setting}=`));
@@ -32,6 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // Set default value if no cookie is found
       settings[setting] = multiOptionSettingOptions[setting][0];
+      // Set a cookie with a one-year expiration for new settings
+      updateCookie(setting, settings[setting]);
     }
   });
 
@@ -51,10 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Determine the index of the new option
         let newIndex;
-        if (currentIndex === multiOptionSettingOptions[e.currentTarget.dataset.setting].length - 1) { // If it's the last option
-          newIndex = 0; // Cycle back to the first option
+        if (currentIndex === multiOptionSettingOptions[e.currentTarget.dataset.setting].length - 1) {
+          newIndex = 0;
         } else {
-          newIndex = currentIndex + 1; // Otherwise, go to the next option
+          newIndex = currentIndex + 1;
         }
 
         // Get the new option from multiOptionSettingOptions
@@ -65,16 +80,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Update the link text and span data-char with the new state
-      console.log(e.currentTarget);
       let newSpanElement = document.createElement('span');
       newSpanElement.dataset.char = `${e.currentTarget.dataset.setting}: ${newState}`;
       newSpanElement.textContent = `${e.currentTarget.dataset.setting}: ${newState}`;
       e.currentTarget.innerHTML = '';
       e.currentTarget.appendChild(newSpanElement);
-      console.log(newSpanElement);
 
       // Store the new state in settings object
       settings[e.currentTarget.dataset.setting.replace(' ', '')] = newState;
+
+      // Call updateCookie to set the cookie with the new state and one-year expiration
+      updateCookie(e.currentTarget.dataset.setting, newState);
 
       // Mark that settings have been changed
       settingsChanged = true;
