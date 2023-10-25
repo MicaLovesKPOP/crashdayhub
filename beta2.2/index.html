@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="interactionStates.js" defer></script>
+    <script src="menuNavigation.js" defer></script>
+    <script src="settingsManager.js" defer></script>
+    <title>Crashday Hub [BETA2.2]</title>
+</head>
+<body>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen"></div>
+
+    <!-- Background Video -->
+    <div class="background" style="z-index: -99">
+        <div class="iframe-container">
+            <iframe tabindex="-1" frameborder="0" height="100%" width="100%" 
+            src="https://www.youtube.com/embed/videoseries?controls=0&amp;list=PLn8rM6JdMMiNrtABEbSfjxSRVmvxKHo7v&autoplay=1&mute=1&loop=0&controls=0&showinfo=0&autohide=1">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Blinds Overlay -->
+    <div class="menu-overlay blinds"></div>
+
+    <!-- Main Menu -->
+    <div class="menu-container">
+        <nav id="main-menu" class="menu main-menu">
+            <ul class="menu-list">
+                <li><a href="https://discord.me/crashday" target="_blank" rel="noreferrer noopener"><span data-char="Official Discord">Official Discord</span></a></li>
+                <li><a href="https://steamcommunity.com/app/508980/workshop/" target="_blank" rel="noreferrer noopener"><span data-char="Steam Workshop">Steam Workshop</span></a></li>
+                <li><a href="#tools-menu"><span data-char="Tools">Tools</span></a></li>
+                <li><a href="#resources-menu"><span data-char="Resources">Resources</span></a></li>
+                <li><a href="#options-menu"><span data-char="Options">Options</span></a></li>
+            </ul>
+        </nav>
+
+        <!-- Submenus -->
+        <nav id="tools-menu" class="menu submenu">
+            <ul class="menu-list">
+                <li><a href="https://steamcommunity.com/app/508980/discussions/0/1733213724899660076/" target="_blank" rel="noreferrer noopener"><span data-char="3D Track Editor">3D Track Editor</span></a></li>
+                <li><a href="https://github.com/wurunduk/crashday-smart-launcher/releases/latest" target="_blank" rel="noreferrer noopener"><span data-char="Smart Launcher">Smart Launcher</span></a></li>
+            </ul>
+        </nav>
+
+        <nav id="resources-menu" class="menu submenu">
+            <ul class="menu-list">
+                <li><a href="https://wurunduk.github.io/crashday-sdk/" target="_blank" rel="noreferrer noopener"><span data-char="Crashday SDK">Crashday SDK</span></a></li>
+                <li><a href="https://crashdaycenter.com/" target="_blank" rel="noreferrer noopener"><span data-char="Modding Guides">Modding Guides</span></a></li>
+                <li><a href="https://docs.google.com/spreadsheets/d/1-dXl7E2KFRwKLf8ixcD6HMSSu9EfKzN5hGQCQxJ4YOk/edit?usp=sharing" target="_blank" rel="noreferrer noopener"><span data-char="Modding Info">Modding Info</span></a></li>
+                <li><a href="https://github.com/wurunduk/blender-p3d-import-export/releases/latest" target="_blank" rel="noreferrer noopener"><span data-char="Blender Plugin"></span>Blender Plugin</a></li>
+            </ul>
+        </nav>
+
+        <nav id="options-menu" class="menu submenu">
+            <ul class="menu-list">
+                <li><a class="setting-link" data-setting="Cookies"><span data-char="Cookies: Off">Cookies: Off</span></a></li>
+                <li><a class="setting-link" data-setting="Welcome Screen"><span data-char="Welcome Screen: On">Welcome Screen: On</span></a></li>
+                <li><a class="setting-link" data-setting="Background Video"><span data-char="Background Video: Loop">Background Video: Loop</span></a></li>
+                <li><a class="setting-link" data-setting="Effects Volume"><span data-char="Effects Volume: 5">Effects Volume: 5</span></a></li>
+                <li><a class="setting-link" data-setting="Music Volume"><span data-char="Music Volume: 5">Music Volume: 5</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- animated footer -->
+    <footer>
+    </footer>
+    
+</body>
+</html>
 
