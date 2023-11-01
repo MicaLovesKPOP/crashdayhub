@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="interactionStates.js" defer></script>
-    <script src="menuNavigation.js" defer></script>
-    <script src="settingsManager.js" defer></script>
-    <title>Crashday Hub [BETA2.2]</title>
+    <link rel="icon" href="./resources/media/favicon.ico">
+    <script src="menuInteractionHandler.js" defer></script>
+    <script src="settingsCookieHandler.js" defer></script>
+    <title>Crashday Hub</title>
 </head>
 <body>
     
@@ -26,13 +26,15 @@
     <div class="background" style="z-index: -99">
         <div class="iframe-container">
             <iframe tabindex="-1" frameborder="0" height="100%" width="100%" 
-            src="https://www.youtube.com/embed/videoseries?controls=0&amp;list=PLn8rM6JdMMiNrtABEbSfjxSRVmvxKHo7v&autoplay=1&mute=1&loop=0&controls=0&showinfo=0&autohide=1">
+            src="https://www.youtube.com/embed/videoseries?controls=0&amp;list=PLn8rM6JdMMiNrtABEbSfjxSRVmvxKHo7v&autoplay=1&mute=1&loop=0&controls=0&showinfo=0&autohide=1&enablejsapi=1">
             </iframe>
+            <script src="youtubeIframeAPIHandler.js" defer></script>
         </div>
+        <div class="image-background"></div>
     </div>
 
     <!-- Blinds Overlay Effect -->
-    <div class="menu-overlay blinds"></div>
+    <div class="blinds"></div>
 
     <!-- Main Menu -->
     <div class="menu-container">
