@@ -34,6 +34,7 @@ xhr.onload = function() {
   div.style.left = "0";
   div.style.margin = "10px";
   div.style.fontSize = "small";
+  div.style.zIndex = "9999";
 
   // Set the div text
   div.textContent = "Last modified: " + dateTimeStr;
