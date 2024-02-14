@@ -1,0 +1,43 @@
+// Get the file name
+var filename = "index.html";
+
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Open a GET request to the file
+xhr.open("GET", filename);
+
+// Send the request
+xhr.send();
+
+// When the request is loaded
+xhr.onload = function() {
+  // Get the Last-Modified header
+  var lastModified = xhr.getResponseHeader("Last-Modified");
+
+  // Create a new Date object from the header value
+  var date = new Date(lastModified);
+
+  // Format the date and time
+  var dateOptions = { year: "numeric", month: "short", day: "numeric" };
+  var timeOptions = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+  var dateStr = date.toLocaleDateString("en-US", dateOptions);
+  var timeStr = date.toLocaleTimeString("en-US", timeOptions);
+  var dateTimeStr = dateStr + " " + timeStr;
+
+  // Create a new div element
+  var div = document.createElement("div");
+
+  // Set the div style
+  div.style.position = "absolute";
+  div.style.top = "0";
+  div.style.left = "0";
+  div.style.margin = "10px";
+  div.style.fontSize = "small";
+
+  // Set the div text
+  div.textContent = "Last modified: " + dateTimeStr;
+
+  // Append the div to the document body
+  document.body.appendChild(div);
+};
