@@ -19,13 +19,14 @@
     </form>
 
 <script>
-    // Function to fetch the last updated time of the file
-    async function fetchLastUpdatedTime() {
-        const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/crashdayhub/contents/webform.html');
-        const data = await response.json();
-        const lastUpdatedTime = new Date(data.updated_at).toLocaleTimeString();
-        document.getElementById('lastUpdatedTime').textContent = lastUpdatedTime;
-    }
+// Function to fetch the last updated time of the file
+async function fetchLastUpdatedTime() {
+    const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/crashdayhub/commits?path=webform.html');
+    const data = await response.json();
+    const lastCommit = data[0];
+    const lastUpdatedTime = new Date(lastCommit.commit.committer.date).toLocaleTimeString();
+    document.getElementById('lastUpdatedTime').textContent = lastUpdatedTime;
+}
 
     // Fetch and display the last updated time when the page loads
     fetchLastUpdatedTime();
