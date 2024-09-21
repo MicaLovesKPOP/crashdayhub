@@ -6,18 +6,6 @@
     <title>Submit Issue</title>
 </head>
 <body>
-    <h1>Submit an Issue</h1>
-    <form id="issueForm">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br><br>
-        <label for="body">Description:</label>
-        <textarea id="body" name="body" required></textarea><br><br>
-        <p>Last Updated Time: <span id="lastUpdatedTime"></span></p>
-        <button type="submit">Submit</button>
-    </form>
-
 <script>
 // Function to fetch the last updated time of the file
 async function fetchLastUpdatedTime() {
@@ -69,5 +57,17 @@ fetchLastUpdatedTime();
         }
     });
 </script>
+    
+    <h1>Submit an Issue</h1>
+    <form id="issueForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="body">Description:</label>
+        <textarea id="body" name="body" required></textarea><br><br>
+        <p>Last Updated Time: <span id="lastUpdatedTime"></span></p>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
