@@ -7,12 +7,11 @@
 </head>
 <body>
 <script>
-// Function to fetch the last updated time of the file
+// Function to fetch the last updated time of the file from GitHub Pages
 async function fetchLastUpdatedTime() {
-    const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/crashdayhub/commits?path=webform.html');
-    const data = await response.json();
-    const lastCommit = data[0];
-    const lastUpdatedDate = new Date(lastCommit.commit.committer.date);
+    const response = await fetch('https://micaloveskpop.github.io/crashdayhub/webform.html');
+    const lastModified = response.headers.get('Last-Modified');
+    const lastUpdatedDate = new Date(lastModified);
 
     // Format the date and time as YYMMDDHHMMSS
     const formattedDateTime = lastUpdatedDate.getFullYear().toString().slice(2) +
