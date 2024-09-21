@@ -24,12 +24,21 @@ async function fetchLastUpdatedTime() {
     const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/crashdayhub/commits?path=webform.html');
     const data = await response.json();
     const lastCommit = data[0];
-    const lastUpdatedTime = new Date(lastCommit.commit.committer.date).toLocaleTimeString();
-    document.getElementById('lastUpdatedTime').textContent = lastUpdatedTime;
+    const lastUpdatedDate = new Date(lastCommit.commit.committer.date);
+
+    // Format the date and time as YYMMDDHHMMSS
+    const formattedDateTime = lastUpdatedDate.getFullYear().toString().slice(2) +
+                              String(lastUpdatedDate.getMonth() + 1).padStart(2, '0') +
+                              String(lastUpdatedDate.getDate()).padStart(2, '0') +
+                              String(lastUpdatedDate.getHours()).padStart(2, '0') +
+                              String(lastUpdatedDate.getMinutes()).padStart(2, '0') +
+                              String(lastUpdatedDate.getSeconds()).padStart(2, '0');
+
+    document.getElementById('lastUpdatedTime').textContent = formattedDateTime;
 }
 
-    // Fetch and display the last updated time when the page loads
-    fetchLastUpdatedTime();
+// Fetch and display the last updated time when the page loads
+fetchLastUpdatedTime();
 
     document.getElementById('issueForm').addEventListener('submit', async function(event) {
         event.preventDefault();
