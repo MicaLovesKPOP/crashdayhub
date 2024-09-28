@@ -41,15 +41,15 @@
             const body = document.getElementById('body').value;
             const time = document.getElementById('lastUpdatedTime').textContent;
 
-            const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/actions/workflows/submit-issue.yml/dispatches', {
+            const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/dispatches', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/vnd.github.v3+json',
-                    'Authorization': `Bearer ACCESS_TOKEN`
+                    'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`
                 },
                 body: JSON.stringify({
-                    ref: 'main',
-                    inputs: {
+                    event_type: 'submit-issue',
+                    client_payload: {
                         name: name,
                         title: title,
                         body: `**Submitted by:** ${name}\n\n**Last Updated Time:** ${time}\n\n${body}`
