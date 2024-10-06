@@ -51,16 +51,6 @@ form.addEventListener('submit', async (event) => {
       systemInfo
     });
 
-    const apiEndpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/issues`;
-    info('API endpoint:', apiEndpoint);
-
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    info('Headers:', headers);
-
     const issueBody = {
       title,
       body: `
@@ -79,35 +69,25 @@ ${actualBehavior}
 **System Information:**
 ${systemInfo}
 `,
-      labels: ['bug'],
-      repository_project: {
-        id: projectNumber
-      }
+      labels: ['bug']
     };
     info('Issue body:', issueBody);
 
-    try {
-      logRequest('POST', apiEndpoint, headers, issueBody);
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(issueBody)
-      });
-      logResponse(response);
+    const webhookUrl = 'https://zapier.com/hooks/{your-webhook-url}';
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(issueBody)
+    });
 
-      if (response.ok) {
-        info('Issue created successfully!');
-        alert('Bug report submitted successfully!');
-        form.reset();
-      } else {
-        warn(`Error creating issue: ${response.statusText}`);
-        logError(new Error(`Error creating issue: ${response.statusText}`));
-        alert(`Error submitting bug report: ${response.statusText}`);
-        console.error('Response text:', await response.text());
-      }
-    } catch (error) {
-      logError(error);
-      alert(`Error submitting bug report: ${error.message}`);
+    if (response.ok) {
+      info('Bug report submitted successfully!');
+      form.reset();
+    } else {
+      warn(`Error submitting bug report: ${response.statusText}`);
+      console.error('Response text:', await response.text());
     }
   } catch (error) {
     logError(error);
