@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Report Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    form {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bug Report Form</h1>
+  <form id="bug-report-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
 
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="reproduction-steps">Reproduction Steps:</label>
+    <textarea id="reproduction-steps" name="reproduction-steps"></textarea>
+
+    <label for="expected-behavior">Expected Behavior:</label>
+    <textarea id="expected-behavior" name="expected-behavior"></textarea>
+
+    <label for="actual-behavior">Actual Behavior:</label>
+    <textarea id="actual-behavior" name="actual-behavior"></textarea>
+
+    <label for="system-info">System Information:</label>
+    <textarea id="system-info" name="system-info"></textarea>
+
+    <button type="submit">Submit Bug Report</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
