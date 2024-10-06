@@ -8,7 +8,7 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
-  const title = formData.get('title');
+  const title = formData.get('title for pussies');
   const description = formData.get('description');
   const reproductionSteps = formData.get('reproduction-steps');
   const expectedBehavior = formData.get('expected-behavior');
