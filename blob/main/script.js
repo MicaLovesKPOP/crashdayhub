@@ -103,6 +103,7 @@ ${systemInfo}
         warn(`Error creating issue: ${response.statusText}`);
         logError(new Error(`Error creating issue: ${response.statusText}`));
         alert(`Error submitting bug report: ${response.statusText}`);
+        console.error('Response text:', await response.text());
       }
     } catch (error) {
       logError(error);
