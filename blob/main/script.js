@@ -1,5 +1,5 @@
 const form = document.getElementById('bug-report-form');
-const token = 'YOUR_NEW_TOKEN_HERE'; // replace with your new token
+const token = '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'; // replace with your new token
 const projectNumber = 2; // replace with your project number
 const repoOwner = 'MicaLovesKPOP'; // replace with your GitHub username
 const repoName = 'crashdayhub'; // replace with your repository name
