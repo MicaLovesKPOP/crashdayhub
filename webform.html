@@ -28,7 +28,7 @@
 async function fetchLastUpdatedTime() {
   const response = await fetch('https://micaloveskpop.github.io/crashdayhub/webform.html');
   const lastModified = response.headers.get('Last-Modified');
-  const lastUpdatedDate = new Date(lastModified); 
+  const lastUpdatedDate = new Date(lastModified);
   const formattedDateTime = lastUpdatedDate.getFullYear().toString().slice(2) +
     String(lastUpdatedDate.getMonth() + 1).padStart(2, '0') +
     String(lastUpdatedDate.getDate()).padStart(2, '0') +
@@ -48,32 +48,29 @@ document.getElementById('issueForm').addEventListener('submit', async function(e
   const time = document.getElementById('lastUpdatedTime').textContent;
 
 try {
-  const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/actions/workflows/submit-issue.yml/dispatches', {
+  const response = await fetch(`https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/issues`, {
     method: 'POST',
     headers: {
       'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer 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`
     },
     body: JSON.stringify({
-      event_type:'submit-issue',
-      client_payload: {
-        name: name,
-        title: title,
-        body: `**Submitted by:** ${name}\n\n**Last Updated Time:** ${time}\n\n${body}`
-      }
+      title: title,
+      body: `**Submitted by:** ${name}\n\n**Last Updated Time:** ${time}\n\n${body}`
     })
   });
 
   if (response.ok) {
-    alert('Issue submitted successfully!');
+    alert('Issue created successfully!');
   } else {
-    console.error(`Failed to submit issue: ${response.status} ${response.statusText}`);
+    console.error(`Failed to create issue: ${response.status} ${response.statusText}`);
     console.error(`Response data: ${await response.text()}`);
-    alert(`Failed to submit issue: ${response.status} ${response.statusText}`);
+    alert(`Failed to create issue: ${response.status} ${response.statusText}`);
   }
 } catch (error) {
-  console.error(`Error submitting issue: ${error.message}`);
-  alert(`Error submitting issue: ${error.message}`);
+  console.error(`Error creating issue: ${error.message}`);
+  alert(`Error creating issue: ${error.message}`);
 }
 });
     </script>
