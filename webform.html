@@ -50,14 +50,16 @@ form.addEventListener('submit', async (event) => {
   const body = bodyInput.value;
 
   try {
-    const url = `https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/issues`;
+    const url = `https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/dispatches`;
     const headers = {
-      'Authorization': `Bearer ${TOKEN}`,
       'Content-Type': 'application/json'
     };
     const data = {
-      'title': title,
-      'body': body
+      'event_type': 'create-issue',
+      'client_payload': {
+        'title': title,
+        'body': body
+      }
     };
 
     const response = await fetch(url, {
