@@ -22,8 +22,12 @@ const logResponse = (response) => {
 };
 
 const logError = (error) => {
-  error(`Error: ${error.message}`);
-  error(`Stack: ${error.stack}`);
+  if (typeof error === 'object' && error!== null) {
+    console.error(`Error: ${error.message}`);
+    console.error(`Stack: ${error.stack}`);
+  } else {
+    console.error(`Error: ${error}`);
+  }
 };
 
 form.addEventListener('submit', async (event) => {
