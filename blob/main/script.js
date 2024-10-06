@@ -1,5 +1,5 @@
 const form = document.getElementById('bug-report-form');
-const token = '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'; // replace with your personal access token
+const token = 'github_pat_11AGAVDBI00AHrB89tseDa_SGba5iELFtq5tvbq9gvmG3LA4SGZdxuSBbgg'; // replace with your personal access token
 const projectNumber = 2; // replace with your project number
 const repoOwner = 'MicaLovesKPOP'; // replace with your GitHub username
 const repoName = 'crashdayhub'; // replace with your repository name
@@ -41,8 +41,8 @@ ${actualBehavior}
 ${systemInfo}
 `,
     labels: ['bug'],
-    project: {
-      id: projectNumber
+    repository_project: {
+      project_id: projectNumber
     }
   };
 
