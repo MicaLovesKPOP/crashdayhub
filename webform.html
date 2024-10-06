@@ -47,31 +47,34 @@ document.getElementById('issueForm').addEventListener('submit', async function(e
   const body = document.getElementById('body').value;
   const time = document.getElementById('lastUpdatedTime').textContent;
 
-  try {
-const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/actions/workflows/submit-issue.yml/dispatches', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    event_type:'submit-issue',
-    client_payload: {
-      name: name,
-      title: title,
-      body: `**Submitted by:** ${name}\n\n**Last Updated Time:** ${time}\n\n${body}`
-    }
-  })
-});
+try {
+  const response = await fetch('https://api.github.com/repos/MicaLovesKPOP/CrashdayBugTracking/actions/workflows/submit-issue.yml/dispatches', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      event_type:'submit-issue',
+      client_payload: {
+        name: name,
+        title: title,
+        body: `**Submitted by:** ${name}\n\n**Last Updated Time:** ${time}\n\n${body}`
+      }
+    })
+  });
 
-    if (response.ok) {
-      alert('Issue submitted successfully!');
-    } else {
-      alert(`Failed to submit issue: ${response.status} ${response.statusText}`);
-    }
-  } catch (error) {
-    alert(`Error submitting issue: ${error.message}`);
+  if (response.ok) {
+    alert('Issue submitted successfully!');
+  } else {
+    console.error(`Failed to submit issue: ${response.status} ${response.statusText}`);
+    console.error(`Response data: ${await response.text()}`);
+    alert(`Failed to submit issue: ${response.status} ${response.statusText}`);
   }
+} catch (error) {
+  console.error(`Error submitting issue: ${error.message}`);
+  alert(`Error submitting issue: ${error.message}`);
+}
 });
     </script>
 </body>
