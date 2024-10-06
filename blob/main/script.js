@@ -40,4 +40,24 @@ ${actualBehavior}
 **System Information:**
 ${systemInfo}
 `,
-    labels: ['bug
+    labels: ['bug'],
+    project: {
+      id: projectNumber
+    }
+  };
+
+  const response = await fetch(apiEndpoint, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(issueBody)
+  });
+
+  if (response.ok) {
+    console.log('Issue created successfully!');
+    alert('Bug report submitted successfully!');
+    form.reset();
+  } else {
+    console.error('Error creating issue:', response.statusText);
+    alert('Error submitting bug report. Please try again.');
+  }
+});
