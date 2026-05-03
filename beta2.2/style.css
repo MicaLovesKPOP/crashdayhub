@@ -15,6 +15,12 @@ body {
   -webkit-user-select: none;
 }
 
+:root {
+  --ui-help-band-bottom: 10.26%;
+  --ui-help-band-height: 4.7%;
+  --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2));
+}
+
 .menu {
   display: flex;
   justify-content: center;
@@ -175,8 +181,8 @@ body[data-theme="redline-red"] .site-title-subtitle {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: calc(8.8% + 15px);
-  height: 4.7%;
+  bottom: var(--ui-help-band-bottom);
+  height: var(--ui-help-band-height);
   background: linear-gradient(270deg, rgba(var(--theme-context-help-rgb, 148, 0, 0), var(--theme-context-help-opacity, 0.48)) 0%, rgba(var(--theme-context-help-rgb, 148, 0, 0), 0) 100%);
 }
 
@@ -186,7 +192,7 @@ body[data-theme="redline-red"] .site-title-subtitle {
 
 #context-help-text {
   position: absolute;
-  top: calc(100% - (8.8% + 15px + 2.35%));
+  top: calc(100% - var(--ui-help-text-center-bottom));
   left: 100%;
   z-index: 1;
   white-space: nowrap;
