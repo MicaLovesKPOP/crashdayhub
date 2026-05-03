@@ -14,13 +14,13 @@ const settings = {
 
 window.crashdayHubSettings = settings;
 
-const displayValues = {
-  'Cookies': ['Off', 'On'],
-  'Welcome Screen': ['Off', 'On'],
-  'Background Video': ['Off', 'Loop', 'Once']
+const settingDefinitions = {
+  'Cookies': { type: 'choice', values: ['Off', 'On'] },
+  'Welcome Screen': { type: 'choice', values: ['Off', 'On'] },
+  'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Once'] },
+  'Effects Volume': { type: 'number', min: 0, max: 10 },
+  'Music Volume': { type: 'number', min: 0, max: 10 }
 };
-
-const volumeSettings = new Set(['Effects Volume', 'Music Volume']);
 
 const cookieNames = {
   'Cookies': 'crashdayHubCookies',
@@ -31,7 +31,13 @@ const cookieNames = {
 };
 
 function getDisplayValue(setting) {
-  return displayValues[setting] ? displayValues[setting][settings[setting]] : settings[setting];
+  const definition = settingDefinitions[setting];
+
+  if (definition?.type === 'choice') {
+    return definition.values[settings[setting]] ?? definition.values[0];
+  }
+
+  return settings[setting];
 }
 
 function getOneYearFromNow() {
@@ -88,8 +94,18 @@ function applySettings() {
 
   if (iframe && imageBackground) {
     const backgroundMode = settings['Background Video'];
-    iframe.style.display = backgroundMode === 0 ? 'none' : '';
-    imageBackground.style.display = backgroundMode === 0 ? 'block' : '';
+    const videoIsOff = backgroundMode === 0;
+
+    iframe.style.display = videoIsOff ? 'none' : '';
+    imageBackground.style.display = videoIsOff ? 'block' : '';
+
+    if (videoIsOff && window.crashdayHubBackgroundPlayer?.pauseVideo) {
+      window.crashdayHubBackgroundPlayer.pauseVideo();
+    }
+
+    if (!videoIsOff && window.crashdayHubBackgroundPlayer?.playVideo) {
+      window.crashdayHubBackgroundPlayer.playVideo();
+    }
   }
 }
 
@@ -101,32 +117,49 @@ function loadSettingsFromCookies() {
   Object.keys(settings).forEach((setting) => {
     const rawValue = getCookie(cookieNames[setting]);
     const parsedValue = Number.parseInt(rawValue, 10);
+    const definition = settingDefinitions[setting];
 
-    if (Number.isInteger(parsedValue)) {
-      settings[setting] = parsedValue;
+    if (!Number.isInteger(parsedValue) || !definition) {
+      return;
+    }
+
+    if (definition.type === 'choice') {
+      settings[setting] = Math.max(0, Math.min(definition.values.length - 1, parsedValue));
+    } else if (definition.type === 'number') {
+      settings[setting] = Math.max(definition.min, Math.min(definition.max, parsedValue));
     }
   });
 }
 
 function getNextSettingValue(setting, direction = 1) {
   const currentValue = settings[setting];
+  const definition = settingDefinitions[setting];
 
-  if (displayValues[setting]) {
-    return (currentValue + direction + displayValues[setting].length) % displayValues[setting].length;
+  if (!definition) {
+    return currentValue;
   }
 
-  if (volumeSettings.has(setting)) {
-    return Math.max(0, Math.min(10, currentValue + direction));
+  if (definition.type === 'choice') {
+    return (currentValue + direction + definition.values.length) % definition.values.length;
   }
 
-  return currentValue === 0 ? 1 : 0;
+  if (definition.type === 'number') {
+    return Math.max(definition.min, Math.min(definition.max, currentValue + direction));
+  }
+
+  return currentValue;
 }
 
 function adjustSettingByLink(link, direction = 1) {
   const setting = link?.dataset.setting;
   if (!setting || !(setting in settings)) return;
 
-  settings[setting] = getNextSettingValue(setting, direction);
+  const nextValue = getNextSettingValue(setting, direction);
+  if (nextValue === settings[setting]) {
+    return;
+  }
+
+  settings[setting] = nextValue;
   applySettings();
   saveSettings();
   updateAllSettingLinks();
