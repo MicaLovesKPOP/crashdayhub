@@ -64,6 +64,7 @@ a {
   font-style: italic;
   color: #B9B0AB;
   -webkit-text-stroke: 0.0724vh #B9B0AB;
+  outline: none;
 }
 
 
@@ -88,14 +89,10 @@ span::before {
 }
 
 /* 
-This block applies a hover effect to list items and their child anchor elements.
-When a list item is hovered, focused, or selected, an animation is applied to the list item and a color change is applied to the anchor element within it.
-This method ensures that all effects are applied at the same time.
+Selection is driven by JavaScript only. Mouse hover and browser focus update
+the selected item, but they do not create a second visual state.
 */
 
-li:hover,
-li:focus,
-li:focus-within,
 li.selected {
   -webkit-transform-origin: left;
   transform-origin: left;
@@ -108,9 +105,6 @@ li.selected {
   to {transform: scale(1.184);}
 }
 
-li:hover a,
-li:focus a,
-li:focus-within a,
 li.selected a {
   color: #E1DEDD;
   -webkit-text-stroke: 0.065vh #E1DEDD;
