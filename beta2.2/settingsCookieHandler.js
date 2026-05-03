@@ -12,6 +12,8 @@ const settings = {
   'Music Volume': 5
 };
 
+window.crashdayHubSettings = settings;
+
 const displayValues = {
   'Cookies': ['Off', 'On'],
   'Welcome Screen': ['Off', 'On'],
