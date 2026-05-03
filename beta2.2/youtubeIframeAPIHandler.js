@@ -45,6 +45,26 @@ function startLoopTimer() {
   }, 250);
 }
 
+function applyBackgroundVideoMode(mode = getBackgroundVideoSetting()) {
+  if (!player || !youtubeIframe) return;
+
+  if (mode === 0) {
+    clearLoopTimer();
+    player.pauseVideo();
+    youtubeIframe.style.display = 'none';
+    return;
+  }
+
+  youtubeIframe.style.display = '';
+  player.playVideo();
+
+  if (mode === 1) {
+    startLoopTimer();
+  } else {
+    clearLoopTimer();
+  }
+}
+
 function onYouTubeIframeAPIReady() {
   if (!youtubeIframe || typeof YT === 'undefined') return;
 
@@ -60,24 +80,19 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady() {
   window.crashdayHubBackgroundPlayer = player;
-
-  if (getBackgroundVideoSetting() === 0) {
-    player.pauseVideo();
-    return;
-  }
-
-  player.playVideo();
-
-  if (shouldLoopBackgroundVideo()) {
-    startLoopTimer();
-  }
+  window.crashdayHubBackgroundVideoModeChanged = applyBackgroundVideoMode;
+  applyBackgroundVideoMode();
 }
 
 function onPlayerStateChange(event) {
   const backgroundVideoSetting = getBackgroundVideoSetting();
 
-  if (event.data === YT.PlayerState.PLAYING && backgroundVideoSetting === 1) {
-    startLoopTimer();
+  if (event.data === YT.PlayerState.PLAYING) {
+    if (backgroundVideoSetting === 1) {
+      startLoopTimer();
+    } else {
+      clearLoopTimer();
+    }
     return;
   }
 
