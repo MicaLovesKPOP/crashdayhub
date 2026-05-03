@@ -80,12 +80,13 @@ function startContextHelpMarquee(helpText) {
   function runLoop() {
     if (token !== helpMarqueeToken) return;
 
-    const viewportWidth = window.innerWidth;
+    const helpBar = document.querySelector('.context-help-bar');
+    const canvasWidth = helpBar?.getBoundingClientRect().width || window.innerWidth;
     const textWidth = helpText.getBoundingClientRect().width;
     const fontSize = Number.parseFloat(window.getComputedStyle(helpText).fontSize) || 0;
     const glyphClearance = fontSize * HELP_MARQUEE_GLYPH_CLEARANCE_EM;
-    const distance = viewportWidth + textWidth + glyphClearance;
-    const pixelsPerMs = viewportWidth / HELP_MARQUEE_VIEWPORT_TRAVEL_MS;
+    const distance = canvasWidth + textWidth + glyphClearance;
+    const pixelsPerMs = canvasWidth / HELP_MARQUEE_VIEWPORT_TRAVEL_MS;
     const movementDuration = distance / pixelsPerMs;
 
     helpText.style.transform = 'translate(0, -50%)';
