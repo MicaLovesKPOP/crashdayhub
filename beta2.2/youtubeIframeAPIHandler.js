@@ -1,31 +1,37 @@
 // ./youtubeIframeAPIHandler.js
 
-// Load the IFrame Player API code asynchronously.
 const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
+tag.src = 'https://www.youtube.com/iframe_api';
+
 const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// Convert the existing <iframe> (and YouTube player) into a player after the API code downloads.
 let player;
-let iframe = document.querySelector('iframe');
+const youtubeIframe = document.querySelector('iframe');
 
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player(iframe, {
-        events: {
-            'onStateChange': onPlayerStateChange
-        }
-    });
+function getBackgroundVideoSetting() {
+  return window.crashdayHubSettings?.['Background Video'] ?? 1;
 }
 
-// The API calls this function when the player's state changes.
-function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.ENDED) {
-      if (settings['Background Video'] === 'Loop') {
-        player.playVideo(); // Replay the video
-      } else {
-        // Change the CSS display property to 'none'
-        iframe.style.display = 'none';
-      }
+function onYouTubeIframeAPIReady() {
+  if (!youtubeIframe || typeof YT === 'undefined') return;
+
+  player = new YT.Player(youtubeIframe, {
+    events: {
+      onStateChange: onPlayerStateChange
     }
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (event.data !== YT.PlayerState.ENDED) return;
+
+  const backgroundVideoSetting = getBackgroundVideoSetting();
+
+  // 0 = Off, 1 = Loop, 2 = Once
+  if (backgroundVideoSetting === 1) {
+    player.playVideo();
+  } else {
+    youtubeIframe.style.display = 'none';
+  }
 }
