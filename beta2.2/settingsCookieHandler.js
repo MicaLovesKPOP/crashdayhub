@@ -1,112 +1,136 @@
 // ./settingsCookieHandler.js
 
-// Define iframe and imageBackground at a scope that is accessible by all setting handler functions
 const iframe = document.querySelector('iframe');
 const imageBackground = document.querySelector('.image-background');
+const loadingScreen = document.querySelector('.loading-screen');
 
-// Object to store the default and current settings
 const settings = {
-  "Cookies": 0, // Off, On
-  "Welcome Screen": 1, // Off, On
-  "Background Video": 1, // Off, Loop, Once
-  "Effects Volume": 5, // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-  "Music Volume": 5 // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  'Cookies': 0,
+  'Welcome Screen': 1,
+  'Background Video': 1,
+  'Effects Volume': 5,
+  'Music Volume': 5
 };
 
-// Object to map numeric values to display values for specific settings
 const displayValues = {
-  "Cookies": ["Off", "On"],
-  "Welcome Screen": ["Off", "On"],
-  "Background Video": ["Off", "Loop", "Once"]
+  'Cookies': ['Off', 'On'],
+  'Welcome Screen': ['Off', 'On'],
+  'Background Video': ['Off', 'Loop', 'Once']
 };
 
-// Function to get a future date for cookie expiration (1 year from now)
-const getOneYearFromNow = () => {
-  const d = new Date();
-  d.setFullYear(d.getFullYear() + 1);
-  return d.toUTCString();
+const cookieNames = {
+  'Cookies': 'crashdayHubCookies',
+  'Welcome Screen': 'crashdayHubWelcomeScreen',
+  'Background Video': 'crashdayHubBackgroundVideo',
+  'Effects Volume': 'crashdayHubEffectsVolume',
+  'Music Volume': 'crashdayHubMusicVolume'
+};
+
+function getDisplayValue(setting) {
+  return displayValues[setting] ? displayValues[setting][settings[setting]] : settings[setting];
 }
 
-// Function to update the 'expires' attribute of a cookie
-const updateCookie = (setting, newState) => {
-  if (setting === "Cookies") {
-    if (newState === 0) {
-      // If Cookies are off, delete all cookies
-      console.log("Cookies are off, deleting all cookies")
-      document.cookie.split(";").forEach((c) => {
-        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-      });
-    } else {
-      // If Cookies are on, set all cookies with the current settings
-      console.log("Cookies are on, setting all cookies with the current settings")
-      const expirationDate = getOneYearFromNow();
-      Object.keys(settings).forEach((setting) => {
-        console.log(`${setting}=${settings[setting]}; expires=${expirationDate}; path=/`);
-        document.cookie = `${setting}=${settings[setting]}; expires=${expirationDate}; path=/`;
-      });
-    }
-  } else if (settings["Cookies"] === 1) {
-    // For other settings, only set the cookie if Cookies are on
-      console.log("Other settings, only setting the cookie if Cookies are on")
-    const expirationDate = getOneYearFromNow();
-    document.cookie = `${setting}=${newState}; expires=${expirationDate}; path=/`;
+function getOneYearFromNow() {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() + 1);
+  return date.toUTCString();
+}
+
+function getCookie(name) {
+  return document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${name}=`))
+    ?.split('=')[1];
+}
+
+function setCookie(setting, value) {
+  const name = cookieNames[setting];
+  if (!name) return;
+
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${getOneYearFromNow()}; path=/; SameSite=Lax`;
+}
+
+function deleteManagedCookies() {
+  Object.values(cookieNames).forEach((name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax`;
+  });
+}
+
+function saveSettings() {
+  if (settings.Cookies !== 1) {
+    deleteManagedCookies();
+    return;
+  }
+
+  Object.keys(settings).forEach((setting) => setCookie(setting, settings[setting]));
+}
+
+function updateSettingLink(link) {
+  const setting = link.dataset.setting;
+  const displayValue = getDisplayValue(setting);
+
+  link.innerHTML = `<span data-char="${setting}: ${displayValue}">${setting}: ${displayValue}</span>`;
+}
+
+function applySettings() {
+  if (loadingScreen) {
+    loadingScreen.style.display = settings['Welcome Screen'] === 1 ? '' : 'none';
+  }
+
+  if (iframe && imageBackground) {
+    const backgroundMode = settings['Background Video'];
+    iframe.style.display = backgroundMode === 0 ? 'none' : '';
+    imageBackground.style.display = backgroundMode === 0 ? 'block' : '';
   }
 }
 
-// Function to get a cookie by name
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-// Load settings from cookies and update UI
-document.addEventListener("DOMContentLoaded", () => {
-  // Select all elements with the class "setting-link"
-  const settingsLinks = document.querySelectorAll(".setting-link");
+function loadSettingsFromCookies() {
+  if (getCookie(cookieNames.Cookies) !== '1') {
+    return;
+  }
 
   Object.keys(settings).forEach((setting) => {
-    const cookieValue = getCookie(setting);
-    if (cookieValue !== undefined) {
-      settings[setting] = parseInt(cookieValue);
-    }
-    // Update UI to reflect loaded settings
-    const link = Array.from(settingsLinks).find(link => link.dataset.setting === setting);
-    if (link) {
-      const displayValue = displayValues[setting] ? displayValues[setting][settings[setting]] : settings[setting];
-      link.textContent = `${setting}: ${displayValue}`;
-    }
-    // Set a cookie with a one-year expiration for new settings
-    updateCookie(setting, settings[setting]);
-  });
+    const rawValue = getCookie(cookieNames[setting]);
+    const parsedValue = Number.parseInt(rawValue, 10);
 
-  // Add click event listeners to all setting links
+    if (Number.isInteger(parsedValue)) {
+      settings[setting] = parsedValue;
+    }
+  });
+}
+
+function getNextSettingValue(setting) {
+  const currentValue = settings[setting];
+
+  if (displayValues[setting]) {
+    return (currentValue + 1) % displayValues[setting].length;
+  }
+
+  if (setting === 'Effects Volume' || setting === 'Music Volume') {
+    return currentValue < 10 ? currentValue + 1 : 0;
+  }
+
+  return currentValue === 0 ? 1 : 0;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsLinks = document.querySelectorAll('.setting-link');
+
+  loadSettingsFromCookies();
+  applySettings();
+
   settingsLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault(); // Prevent navigation
-  
-      // Get the current state from the settings object
-      const currentState = settings[e.currentTarget.dataset.setting];
-  
-      // Determine the new state
-      let newState;
-      if (displayValues[e.currentTarget.dataset.setting]) {
-        newState = (currentState + 1) % displayValues[e.currentTarget.dataset.setting].length;
-      } else if (e.currentTarget.dataset.setting === "Effects Volume" || e.currentTarget.dataset.setting === "Music Volume") {
-        newState = currentState < 10 ? currentState + 1 : 0;
-      } else {
-        newState = currentState === 0 ? 1 : 0;
-      }
-  
-      // Update the link text with the new state
-      const displayValue = displayValues[e.currentTarget.dataset.setting] ? displayValues[e.currentTarget.dataset.setting][newState] : newState;
-      e.currentTarget.textContent = `${e.currentTarget.dataset.setting}: ${displayValue}`;
-  
-      // Store the new state in settings object
-      settings[e.currentTarget.dataset.setting] = newState;
-  
-      // Call updateCookie to set the cookie with the new state and one-year expiration
-      updateCookie(e.currentTarget.dataset.setting, newState);
+    updateSettingLink(link);
+
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const setting = event.currentTarget.dataset.setting;
+      settings[setting] = getNextSettingValue(setting);
+
+      updateSettingLink(event.currentTarget);
+      applySettings();
+      saveSettings();
     });
-  });  
+  });
 });
