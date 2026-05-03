@@ -50,6 +50,24 @@ function isSubmenuLink(link) {
   }
 }
 
+function updateContextHelp(link) {
+  const helpBar = document.querySelector('.context-help-bar');
+  const helpText = document.querySelector('#context-help-text');
+  const text = link?.dataset.help?.trim();
+
+  if (!helpBar || !helpText) return;
+
+  if (text) {
+    helpText.textContent = text;
+    helpBar.classList.add('visible');
+    helpBar.setAttribute('aria-hidden', 'false');
+  } else {
+    helpText.textContent = '';
+    helpBar.classList.remove('visible');
+    helpBar.setAttribute('aria-hidden', 'true');
+  }
+}
+
 function setMenuVisibility(menu, isActive) {
   menu.style.display = isActive ? 'flex' : 'none';
   menu.setAttribute('aria-hidden', isActive ? 'false' : 'true');
@@ -85,7 +103,10 @@ function syncSelectionToDom() {
   });
 
   const items = getMenuItems();
-  if (items.length === 0) return;
+  if (items.length === 0) {
+    updateContextHelp(null);
+    return;
+  }
 
   selectedIndex = Math.max(0, Math.min(selectedIndex, items.length - 1));
   const selectedItem = items[selectedIndex];
@@ -93,6 +114,7 @@ function syncSelectionToDom() {
 
   const selectedLink = getLinkFromItem(selectedItem);
   selectedLink?.focus({ preventScroll: true });
+  updateContextHelp(selectedLink);
 }
 
 function showMenu(menuId, newSelectedIndex = 0) {
