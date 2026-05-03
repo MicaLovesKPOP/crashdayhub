@@ -7,7 +7,7 @@ const MAIN_MENU_ID = '#main-menu';
 
 const HELP_MARQUEE_VIEWPORT_TRAVEL_MS = 17000;
 const HELP_MARQUEE_BLANK_WAIT_MS = 3000;
-const HELP_MARQUEE_GLYPH_CLEARANCE_EM = 1.4;
+const HELP_MARQUEE_GLYPH_CLEARANCE_EM = 2.8;
 
 const menus = Array.from(document.querySelectorAll(MENU_SELECTOR));
 const body = document.body;
