@@ -129,7 +129,6 @@ li.selected a {
   font-weight: 600;
   text-transform: uppercase;
   line-height: 0.92;
-  letter-spacing: -0.11em;
   white-space: nowrap;
   transform: scaleY(0.96);
   transform-origin: left top;
@@ -138,6 +137,8 @@ li.selected a {
 .site-title-main {
   top: 5.65%;
   font-size: 6.75vh;
+  letter-spacing: -0.055em;
+  word-spacing: 0.05em;
   color: #fff;
   -webkit-text-stroke: 0.08vh #fff;
   text-shadow:
@@ -152,6 +153,7 @@ li.selected a {
   top: 13.55%;
   left: 2.8%;
   font-size: 3.0vh;
+  letter-spacing: -0.08em;
   color: rgb(var(--theme-subtitle-rgb, 255, 40, 65));
   -webkit-text-stroke: 0.055vh rgb(var(--theme-subtitle-rgb, 255, 40, 65));
   text-shadow: 0.16vw 0.16vw 0 #000;
