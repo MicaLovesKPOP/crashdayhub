@@ -17,7 +17,11 @@ function getMenu(menuId = activeMenuId) {
 
 function getMenuItems(menuId = activeMenuId) {
   const menu = getMenu(menuId);
-  return menu ? Array.from(menu.querySelectorAll(MENU_ITEM_SELECTOR)) : [];
+  if (!menu) return [];
+
+  return Array.from(menu.querySelectorAll(MENU_ITEM_SELECTOR)).filter((item) => {
+    return !item.classList.contains('disabled') && item.getAttribute('aria-disabled') !== 'true';
+  });
 }
 
 function getSelectedItem() {
@@ -26,6 +30,10 @@ function getSelectedItem() {
 
 function getLinkFromItem(item) {
   return item ? item.querySelector(MENU_LINK_SELECTOR) : null;
+}
+
+function isSettingLink(link) {
+  return Boolean(link?.classList.contains('setting-link'));
 }
 
 function isSubmenuLink(link) {
@@ -38,7 +46,9 @@ function setMenuVisibility(menu, isActive) {
   menu.setAttribute('aria-hidden', isActive ? 'false' : 'true');
 
   menu.querySelectorAll(MENU_LINK_SELECTOR).forEach((link) => {
-    link.tabIndex = isActive ? 0 : -1;
+    const item = link.closest(MENU_ITEM_SELECTOR);
+    const isDisabled = item?.classList.contains('disabled') || item?.getAttribute('aria-disabled') === 'true';
+    link.tabIndex = isActive && !isDisabled ? 0 : -1;
   });
 
   if (!isActive) {
@@ -61,16 +71,18 @@ function syncSelectionToDom() {
     setMenuVisibility(menu, isActive);
   });
 
+  menus.forEach((menu) => {
+    menu.querySelectorAll(MENU_ITEM_SELECTOR).forEach((item) => item.classList.remove('selected'));
+  });
+
   const items = getMenuItems();
   if (items.length === 0) return;
 
   selectedIndex = Math.max(0, Math.min(selectedIndex, items.length - 1));
+  const selectedItem = items[selectedIndex];
+  selectedItem.classList.add('selected');
 
-  items.forEach((item, index) => {
-    item.classList.toggle('selected', index === selectedIndex);
-  });
-
-  const selectedLink = getLinkFromItem(items[selectedIndex]);
+  const selectedLink = getLinkFromItem(selectedItem);
   selectedLink?.focus({ preventScroll: true });
 }
 
@@ -94,6 +106,19 @@ function moveSelection(direction) {
   setSelectedIndex(selectedIndex + direction);
 }
 
+function adjustSetting(link, direction = 1) {
+  if (!isSettingLink(link)) return false;
+
+  if (typeof window.crashdayHubAdjustSetting === 'function') {
+    window.crashdayHubAdjustSetting(link, direction);
+  } else {
+    link.click();
+  }
+
+  syncSelectionToDom();
+  return true;
+}
+
 function activateLink(link) {
   if (!link) return;
 
@@ -104,8 +129,7 @@ function activateLink(link) {
     return;
   }
 
-  if (link.classList.contains('setting-link')) {
-    link.click();
+  if (adjustSetting(link, 1)) {
     return;
   }
 
@@ -125,6 +149,7 @@ function bindMenuPointerControls() {
 
       const item = event.target.closest(MENU_ITEM_SELECTOR);
       if (!item || !menu.contains(item)) return;
+      if (item.classList.contains('disabled') || item.getAttribute('aria-disabled') === 'true') return;
 
       const items = getMenuItems();
       const index = items.indexOf(item);
@@ -139,6 +164,7 @@ function bindMenuPointerControls() {
 
       const item = event.target.closest(MENU_ITEM_SELECTOR);
       if (!item || !menu.contains(item)) return;
+      if (item.classList.contains('disabled') || item.getAttribute('aria-disabled') === 'true') return;
 
       const items = getMenuItems();
       const index = items.indexOf(item);
@@ -153,7 +179,7 @@ function bindMenuPointerControls() {
 
 function bindKeyboardControls() {
   document.addEventListener('keydown', (event) => {
-    if (!['ArrowDown', 'ArrowUp', 'Tab', 'Enter', 'Escape'].includes(event.key)) return;
+    if (!['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Escape'].includes(event.key)) return;
 
     if (event.key === 'Escape') {
       if (activeMenuId !== MAIN_MENU_ID) {
@@ -168,13 +194,33 @@ function bindKeyboardControls() {
 
     if (event.key === 'ArrowDown' || event.key === 'Tab') {
       moveSelection(1);
-    } else if (event.key === 'ArrowUp') {
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
       moveSelection(-1);
-    } else if (event.key === 'Enter') {
+      return;
+    }
+
+    const selectedLink = getLinkFromItem(getSelectedItem());
+
+    if (event.key === 'ArrowLeft') {
+      adjustSetting(selectedLink, -1);
+      return;
+    }
+
+    if (event.key === 'ArrowRight') {
+      adjustSetting(selectedLink, 1);
+      return;
+    }
+
+    if (event.key === 'Enter') {
       activateSelectedItem();
     }
   });
 }
+
+window.crashdayHubMenuSync = syncSelectionToDom;
 
 bindMenuPointerControls();
 bindKeyboardControls();
