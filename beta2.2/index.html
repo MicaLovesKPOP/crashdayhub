@@ -66,13 +66,17 @@
             </ul>
         </nav>
 
-        <nav id="options-menu" class="menu submenu">
-            <ul class="menu-list">
-                <li><a href="#" class="setting-link" data-setting="Cookies"><span data-char="Cookies: Off">Cookies: Off</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Welcome Screen"><span data-char="Welcome Screen: On">Welcome Screen: On</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Background Video"><span data-char="Background Video: Loop">Background Video: Loop</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Effects Volume"><span data-char="Effects Volume: 5">Effects Volume: 5</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Music Volume"><span data-char="Music Volume: 5">Music Volume: 5</span></a></li>
+        <nav id="options-menu" class="menu submenu options-menu" aria-label="Audio options">
+            <h1 class="options-title">Audio</h1>
+            <ul class="menu-list options-list">
+                <li class="option-row" data-setting-row="Sound Output"><a href="#" class="setting-link" data-setting="Sound Output" data-setting-type="toggle"></a></li>
+                <li class="option-row" data-setting-row="Main Volume"><a href="#" class="setting-link" data-setting="Main Volume" data-setting-type="slider"></a></li>
+                <li class="option-row" data-setting-row="Effect Volume"><a href="#" class="setting-link" data-setting="Effect Volume" data-setting-type="slider"></a></li>
+                <li class="option-row" data-setting-row="Engine Volume"><a href="#" class="setting-link" data-setting="Engine Volume" data-setting-type="slider"></a></li>
+                <li class="option-row" data-setting-row="Voice Volume"><a href="#" class="setting-link" data-setting="Voice Volume" data-setting-type="slider"></a></li>
+                <li class="option-row" data-setting-row="Music"><a href="#" class="setting-link" data-setting="Music" data-setting-type="toggle"></a></li>
+                <li class="option-row" data-setting-row="Music Volume"><a href="#" class="setting-link" data-setting="Music Volume" data-setting-type="slider"></a></li>
+                <li class="option-row" data-setting-row="Steam Music"><a href="#" class="setting-link" data-setting="Steam Music" data-setting-type="toggle"></a></li>
             </ul>
         </nav>
     </div>
