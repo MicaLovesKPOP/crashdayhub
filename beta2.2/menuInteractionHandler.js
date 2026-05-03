@@ -5,6 +5,10 @@ const MENU_ITEM_SELECTOR = 'li';
 const MENU_LINK_SELECTOR = 'a';
 const MAIN_MENU_ID = '#main-menu';
 
+const HELP_MARQUEE_VIEWPORT_TRAVEL_MS = 17000;
+const HELP_MARQUEE_BLANK_WAIT_MS = 3000;
+const HELP_MARQUEE_GLYPH_CLEARANCE_EM = 1.4;
+
 const menus = Array.from(document.querySelectorAll(MENU_SELECTOR));
 const body = document.body;
 
@@ -78,8 +82,10 @@ function startContextHelpMarquee(helpText) {
 
     const viewportWidth = window.innerWidth;
     const textWidth = helpText.getBoundingClientRect().width;
-    const distance = viewportWidth + textWidth;
-    const pixelsPerMs = viewportWidth / 17000;
+    const fontSize = Number.parseFloat(window.getComputedStyle(helpText).fontSize) || 0;
+    const glyphClearance = fontSize * HELP_MARQUEE_GLYPH_CLEARANCE_EM;
+    const distance = viewportWidth + textWidth + glyphClearance;
+    const pixelsPerMs = viewportWidth / HELP_MARQUEE_VIEWPORT_TRAVEL_MS;
     const movementDuration = distance / pixelsPerMs;
 
     helpText.style.transform = 'translate(0, -50%)';
@@ -103,7 +109,7 @@ function startContextHelpMarquee(helpText) {
         helpMarqueeTimeout = window.setTimeout(() => {
           if (token !== helpMarqueeToken) return;
           runLoop();
-        }, 3000);
+        }, HELP_MARQUEE_BLANK_WAIT_MS);
       })
       .catch(() => {});
   }
