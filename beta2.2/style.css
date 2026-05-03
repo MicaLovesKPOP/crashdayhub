@@ -110,6 +110,10 @@ li.selected a {
   -webkit-text-stroke: 0.065vh #E1DEDD;
 }
 
+.menu-option-disabled {
+  opacity: 0.34;
+}
+
 
 /*
  ========== ========================== ========== 
@@ -284,4 +288,19 @@ iframe {
 @keyframes fadeIn_vignette {
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+body.skip-welcome .loading-screen,
+body.skip-welcome .background,
+body.skip-welcome .blinds,
+body.skip-welcome .menu-container,
+body.skip-welcome .vignette {
+  -webkit-animation-delay: 0s !important;
+  animation-delay: 0s !important;
+  -webkit-animation-duration: 0.35s !important;
+  animation-duration: 0.35s !important;
+}
+
+body.skip-welcome .loading-screen {
+  display: none;
 }
