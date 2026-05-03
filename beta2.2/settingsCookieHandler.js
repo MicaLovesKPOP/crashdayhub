@@ -14,11 +14,11 @@ const settings = {
 
 window.crashdayHubSettings = settings;
 
-const themeIds = ['redline-red', 'classic-blue', 'ai-green', 'mica-yellow'];
+const themeIds = ['mica-yellow'];
 
 const settingDefinitions = {
   'Cookies': { type: 'choice', values: ['Off', 'On'] },
-  'Theme': { type: 'choice', values: ['Redline Red', 'Classic Blue', 'AI Green', 'Mica Yellow'], requiresCookies: true },
+  'Theme': { type: 'choice', values: ['Mica Yellow'], requiresCookies: true },
   'Welcome Screen': { type: 'choice', values: ['Off', 'On'], requiresCookies: true, startupOnly: true },
   'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Once'], requiresCookies: true },
   'Effects Volume': { type: 'number', min: 0, max: 10, requiresCookies: true },
