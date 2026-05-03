@@ -54,10 +54,23 @@ function onYouTubeIframeAPIReady() {
       onStateChange: onPlayerStateChange
     }
   });
+
+  window.crashdayHubBackgroundPlayer = player;
 }
 
 function onPlayerReady() {
-  startLoopTimer();
+  window.crashdayHubBackgroundPlayer = player;
+
+  if (getBackgroundVideoSetting() === 0) {
+    player.pauseVideo();
+    return;
+  }
+
+  player.playVideo();
+
+  if (shouldLoopBackgroundVideo()) {
+    startLoopTimer();
+  }
 }
 
 function onPlayerStateChange(event) {
