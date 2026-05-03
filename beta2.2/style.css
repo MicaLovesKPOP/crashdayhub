@@ -20,6 +20,22 @@ body {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+  cursor: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  right: 1.5vw;
+  bottom: 1.5vh;
+  width: 2.2vw;
+  height: 2.2vw;
+  pointer-events: none;
+  z-index: 20;
+  clip-path: polygon(0 0, 100% 50%, 36% 62%, 52% 100%);
+  background: #fff;
+  filter: drop-shadow(0.12vw 0.12vw 0.06vw #000);
+  transform: rotate(42deg);
 }
 
 .menu {
@@ -108,6 +124,184 @@ li.selected {
 li.selected a {
   color: #E1DEDD;
   -webkit-text-stroke: 0.065vh #E1DEDD;
+}
+
+
+/*
+ ========== ===================== ========== 
+ ========== AUDIO OPTIONS SCREEN ========== 
+ ========== ===================== ========== 
+*/
+
+.options-menu {
+  justify-content: flex-start !important;
+  padding-top: 5.2vh;
+  box-sizing: border-box;
+}
+
+.options-title {
+  margin: 0 0 17.6vh 2.6vw;
+  font-family: 'Rubik', sans-serif;
+  font-size: 5.4vh;
+  line-height: 1;
+  text-transform: uppercase;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: -0.1vw;
+  -webkit-text-stroke: 0.09vh #fff;
+  text-shadow: 0.22vw 0.22vw 0 #000;
+}
+
+.options-list {
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.option-row {
+  width: 100%;
+  height: 5.6vh;
+  transform: none;
+  line-height: normal;
+}
+
+.option-row.selected {
+  animation: none;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.35) 8%, rgba(255,255,255,0.35) 91%, rgba(255,255,255,0));
+}
+
+.option-row.disabled {
+  opacity: 0.32;
+}
+
+.option-row a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42vw 44vw;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2.55vh;
+  text-transform: none;
+  font-style: normal;
+  color: #c9c9c9;
+  -webkit-text-stroke: 0;
+}
+
+.option-label {
+  position: relative;
+  justify-self: start;
+  margin-left: 8.6vw;
+  text-shadow: 0.12vw 0.12vw 0 #000, -0.06vw -0.06vw 0 #000, 0.06vw -0.06vw 0 #000, -0.06vw 0.06vw 0 #000;
+}
+
+.option-label::before {
+  -webkit-text-stroke: 0.22vh #000;
+}
+
+.option-control {
+  position: relative;
+  justify-self: stretch;
+  height: 4.05vh;
+  margin-right: 7.3vw;
+  border: 0.18vh solid rgba(255,255,255,0.86);
+  border-left-width: 0.24vh;
+  border-radius: 999px 0 999px 999px;
+  background: linear-gradient(180deg, rgba(30,30,30,0.94), rgba(4,4,4,0.94));
+  box-shadow: inset 0 0 1.4vh rgba(255,255,255,0.08), 0 0 0.25vh #000;
+  overflow: visible;
+}
+
+.option-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-row.selected .option-toggle {
+  background: #f7f7f7;
+  border-color: rgba(255,255,255,0.95);
+  box-shadow: 0 0 1.2vh rgba(255,0,32,0.84), inset 0 0 0.7vh rgba(255,255,255,0.4);
+}
+
+.option-value {
+  color: #d5d5d5;
+  font-size: 2.35vh;
+  text-shadow: 0.1vw 0.1vw 0 #000;
+}
+
+.option-row.selected .option-value {
+  color: #111;
+  text-shadow: none;
+}
+
+.option-row.selected .option-toggle::before,
+.option-row.selected .option-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 0.55vh solid transparent;
+  border-bottom: 0.55vh solid transparent;
+  transform: translateY(-50%);
+}
+
+.option-row.selected .option-toggle::before {
+  left: 3.1vw;
+  border-right: 0.82vh solid #000;
+}
+
+.option-row.selected .option-toggle::after {
+  right: 3.1vw;
+  border-left: 0.82vh solid #000;
+}
+
+.option-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55vw;
+}
+
+.option-slider-segment {
+  display: block;
+  width: 4.35vw;
+  height: 1.15vh;
+  transform: skewX(-18deg);
+  border-radius: 0.18vh;
+  background: rgba(94,94,94,0.62);
+}
+
+.option-slider-segment.filled {
+  background: rgba(225,218,214,0.92);
+}
+
+.option-row.selected .option-slider {
+  box-shadow: 0 0 1vh rgba(255,0,32,0.55), inset 0 0 1.2vh rgba(255,255,255,0.08);
+}
+
+.option-row.selected .option-slider::before,
+.option-row.selected .option-slider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 0.55vh solid transparent;
+  border-bottom: 0.55vh solid transparent;
+  transform: translateY(-50%);
+}
+
+.option-row.selected .option-slider::before {
+  left: 3.1vw;
+  border-right: 0.82vh solid #000;
+}
+
+.option-row.selected .option-slider::after {
+  right: 3.1vw;
+  border-left: 0.82vh solid #000;
 }
 
 
