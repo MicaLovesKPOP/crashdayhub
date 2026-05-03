@@ -45,6 +45,28 @@ function startLoopTimer() {
   }, 250);
 }
 
+function isPlayerAtOrNearEnd() {
+  if (!player) return false;
+
+  const state = player.getPlayerState?.();
+  const duration = player.getDuration?.();
+  const currentTime = player.getCurrentTime?.();
+
+  if (state === YT.PlayerState.ENDED) {
+    return true;
+  }
+
+  return Boolean(duration && typeof currentTime === 'number' && duration - currentTime <= 0.5);
+}
+
+function playFromCurrentOrRestartIfEnded() {
+  if (isPlayerAtOrNearEnd()) {
+    player.seekTo(0, true);
+  }
+
+  player.playVideo();
+}
+
 function applyBackgroundVideoMode(mode = getBackgroundVideoSetting()) {
   if (!player || !youtubeIframe) return;
 
@@ -56,7 +78,7 @@ function applyBackgroundVideoMode(mode = getBackgroundVideoSetting()) {
   }
 
   youtubeIframe.style.display = '';
-  player.playVideo();
+  playFromCurrentOrRestartIfEnded();
 
   if (mode === 1) {
     startLoopTimer();
