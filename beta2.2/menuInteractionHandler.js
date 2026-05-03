@@ -11,6 +11,9 @@ const body = document.body;
 let activeMenuId = MAIN_MENU_ID;
 let selectedIndex = 0;
 let activeHelpText = '';
+let helpMarqueeAnimation;
+let helpMarqueeTimeout;
+let helpMarqueeToken = 0;
 
 function getMenu(menuId = activeMenuId) {
   return document.querySelector(menuId);
@@ -51,6 +54,63 @@ function isSubmenuLink(link) {
   }
 }
 
+function stopContextHelpMarquee() {
+  helpMarqueeToken += 1;
+
+  if (helpMarqueeAnimation) {
+    helpMarqueeAnimation.cancel();
+    helpMarqueeAnimation = undefined;
+  }
+
+  if (helpMarqueeTimeout) {
+    window.clearTimeout(helpMarqueeTimeout);
+    helpMarqueeTimeout = undefined;
+  }
+}
+
+function startContextHelpMarquee(helpText) {
+  stopContextHelpMarquee();
+
+  const token = helpMarqueeToken;
+
+  function runLoop() {
+    if (token !== helpMarqueeToken) return;
+
+    const viewportWidth = window.innerWidth;
+    const textWidth = helpText.getBoundingClientRect().width;
+    const distance = viewportWidth + textWidth;
+    const pixelsPerMs = viewportWidth / 17000;
+    const movementDuration = distance / pixelsPerMs;
+
+    helpText.style.transform = 'translate(0, -50%)';
+
+    helpMarqueeAnimation = helpText.animate(
+      [
+        { transform: 'translate(0, -50%)' },
+        { transform: `translate(-${distance}px, -50%)` }
+      ],
+      {
+        duration: movementDuration,
+        easing: 'linear',
+        fill: 'forwards'
+      }
+    );
+
+    helpMarqueeAnimation.finished
+      .then(() => {
+        if (token !== helpMarqueeToken) return;
+
+        helpMarqueeTimeout = window.setTimeout(() => {
+          if (token !== helpMarqueeToken) return;
+          runLoop();
+        }, 3000);
+      })
+      .catch(() => {});
+  }
+
+  window.requestAnimationFrame(runLoop);
+}
+
 function updateContextHelp(link) {
   const helpBar = document.querySelector('.context-help-bar');
   const helpText = document.querySelector('#context-help-text');
@@ -60,7 +120,9 @@ function updateContextHelp(link) {
 
   if (!text) {
     activeHelpText = '';
+    stopContextHelpMarquee();
     helpText.textContent = '';
+    helpText.style.transform = 'translate(0, -50%)';
     helpBar.classList.remove('visible');
     helpBar.setAttribute('aria-hidden', 'true');
     return;
@@ -69,9 +131,10 @@ function updateContextHelp(link) {
   if (text !== activeHelpText) {
     activeHelpText = text;
     helpText.textContent = text;
-    helpText.style.animation = 'none';
-    helpText.offsetHeight;
-    helpText.style.animation = '';
+    helpBar.classList.add('visible');
+    helpBar.setAttribute('aria-hidden', 'false');
+    startContextHelpMarquee(helpText);
+    return;
   }
 
   helpBar.classList.add('visible');
@@ -255,6 +318,15 @@ function bindKeyboardControls() {
     }
   });
 }
+
+window.addEventListener('resize', () => {
+  if (activeHelpText) {
+    const helpText = document.querySelector('#context-help-text');
+    if (helpText) {
+      startContextHelpMarquee(helpText);
+    }
+  }
+});
 
 window.crashdayHubMenuSync = syncSelectionToDom;
 
