@@ -14,6 +14,10 @@ const settings = {
 
 window.crashdayHubSettings = settings;
 
+// Theme selection currently exposes only Mica Yellow.
+// When more themes are re-enabled, keep the visible order alphabetical:
+// AI Green, Classic Blue, Mica Yellow, Redline Red.
+// Mica Yellow should remain the default even when it is not first in that list.
 const themeIds = ['mica-yellow'];
 
 const settingDefinitions = {
