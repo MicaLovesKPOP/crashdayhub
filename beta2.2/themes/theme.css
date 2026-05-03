@@ -1,0 +1,43 @@
+/*
+ * CrashdayHub theme scaffold
+ *
+ * Keep theme-specific values here. Future image swaps can live next to this file,
+ * for example:
+ *   themes/redline-red/loading-screen.webp
+ *   themes/classic-blue/loading-screen.webp
+ *   themes/ai-green/loading-screen.webp
+ *   themes/mica-yellow/loading-screen.webp
+ */
+
+:root,
+body[data-theme="redline-red"] {
+  --theme-name: "Redline Red";
+  --theme-context-help-rgb: 148, 0, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 148, 0, 0;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+body[data-theme="classic-blue"] {
+  --theme-name: "Classic Blue";
+  --theme-context-help-rgb: 0, 72, 148;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 72, 148;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+body[data-theme="ai-green"] {
+  --theme-name: "AI Green";
+  --theme-context-help-rgb: 0, 148, 78;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 148, 78;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+body[data-theme="mica-yellow"] {
+  --theme-name: "Mica Yellow";
+  --theme-context-help-rgb: 214, 166, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 214, 166, 0;
+  --theme-highlight-rgb: 255, 220, 0;
+}
