@@ -274,6 +274,8 @@ body[data-theme="redline-red"] .site-title-subtitle {
 }
 
 iframe {
+  display: block;
+  pointer-events: none;
   width: 300%;
   height: 100%;
   margin-left: -100%;
