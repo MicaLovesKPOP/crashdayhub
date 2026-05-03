@@ -88,17 +88,13 @@ li.selected a {
   opacity: 0.34;
 }
 
-/* The title layer copies .blinds sizing so it remains locked to the same
-   game-screen canvas as the overlay art. */
+/* UI layers use the full viewport canvas. This matches the menu overlay art:
+   it stretches to the viewport instead of using cover/crop logic like video. */
 .site-title-layer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  max-width: 100vw;
-  min-width: 100%;
-  height: 100%;
-  min-height: 580px;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 3;
   pointer-events: none;
   -webkit-animation-delay: 4.5s;
@@ -137,7 +133,7 @@ li.selected a {
 .site-title-main {
   top: 5.65%;
   font-size: 6.75vh;
-  letter-spacing: -0.055em;
+  letter-spacing: 0;
   word-spacing: 0.05em;
   color: #fff;
   -webkit-text-stroke: 0.08vh #fff;
@@ -163,18 +159,12 @@ body[data-theme="redline-red"] .site-title-subtitle {
   display: block;
 }
 
-/* Context help bar. The container copies .blinds sizing so the band and text
-   track the same game-screen canvas when the viewport is resized. */
 .context-help-bar {
   display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  max-width: 100vw;
-  min-width: 100%;
-  height: 100%;
-  min-height: 580px;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
@@ -297,10 +287,10 @@ iframe {
 }
 
 .blinds {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   -webkit-animation-delay: 5.0s;
   animation-delay: 5.0s;
   -webkit-animation-duration: 2.67s;
@@ -309,12 +299,8 @@ iframe {
   animation-name: fadeIn_blinds;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  max-width: 100vw;
-  min-width: 100%;
-  height: 100%;
-  min-height: 580px;
   background-image: url(./resources/media/blinds2.webp);
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   z-index: 0;
