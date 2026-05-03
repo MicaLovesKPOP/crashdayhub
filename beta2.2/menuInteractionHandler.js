@@ -38,7 +38,16 @@ function isSettingLink(link) {
 
 function isSubmenuLink(link) {
   const href = link?.getAttribute('href');
-  return Boolean(href && href.startsWith('#') && document.querySelector(href));
+
+  if (!href || !href.startsWith('#') || href.length <= 1) {
+    return false;
+  }
+
+  try {
+    return Boolean(document.querySelector(href));
+  } catch {
+    return false;
+  }
 }
 
 function setMenuVisibility(menu, isActive) {
@@ -122,16 +131,16 @@ function adjustSetting(link, direction = 1) {
 function activateLink(link) {
   if (!link) return;
 
-  const href = link.getAttribute('href');
-
-  if (isSubmenuLink(link)) {
-    showMenu(href, 0);
-    return;
-  }
-
   if (adjustSetting(link, 1)) {
     return;
   }
+
+  if (isSubmenuLink(link)) {
+    showMenu(link.getAttribute('href'), 0);
+    return;
+  }
+
+  const href = link.getAttribute('href');
 
   if (href && href !== '#') {
     window.open(href, link.target || '_self', link.rel || undefined);
@@ -209,13 +218,8 @@ function bindKeyboardControls() {
       return;
     }
 
-    if (event.key === 'ArrowRight') {
-      adjustSetting(selectedLink, 1);
-      return;
-    }
-
-    if (event.key === 'Enter') {
-      activateSelectedItem();
+    if (event.key === 'ArrowRight' || event.key === 'Enter') {
+      activateLink(selectedLink);
     }
   });
 }
