@@ -2,7 +2,6 @@
 
 const iframe = document.querySelector('iframe');
 const imageBackground = document.querySelector('.image-background');
-const loadingScreen = document.querySelector('.loading-screen');
 
 const settings = {
   'Cookies': 0,
@@ -16,10 +15,10 @@ window.crashdayHubSettings = settings;
 
 const settingDefinitions = {
   'Cookies': { type: 'choice', values: ['Off', 'On'] },
-  'Welcome Screen': { type: 'choice', values: ['Off', 'On'] },
-  'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Once'] },
-  'Effects Volume': { type: 'number', min: 0, max: 10 },
-  'Music Volume': { type: 'number', min: 0, max: 10 }
+  'Welcome Screen': { type: 'choice', values: ['Off', 'On'], requiresCookies: true, startupOnly: true },
+  'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Once'], requiresCookies: true },
+  'Effects Volume': { type: 'number', min: 0, max: 10, requiresCookies: true },
+  'Music Volume': { type: 'number', min: 0, max: 10, requiresCookies: true }
 };
 
 const cookieNames = {
@@ -75,11 +74,20 @@ function saveSettings() {
   Object.keys(settings).forEach((setting) => setCookie(setting, settings[setting]));
 }
 
+function isSettingDisabled(setting) {
+  return Boolean(settingDefinitions[setting]?.requiresCookies && settings.Cookies !== 1);
+}
+
 function updateSettingLink(link) {
   const setting = link.dataset.setting;
   const displayValue = getDisplayValue(setting);
+  const disabled = isSettingDisabled(setting);
+  const item = link.closest('li');
 
   link.innerHTML = `<span data-char="${setting}: ${displayValue}">${setting}: ${displayValue}</span>`;
+  link.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  item?.classList.toggle('menu-option-disabled', disabled);
+  item?.setAttribute('aria-disabled', disabled ? 'true' : 'false');
 }
 
 function updateAllSettingLinks() {
@@ -87,11 +95,13 @@ function updateAllSettingLinks() {
   window.crashdayHubMenuSync?.();
 }
 
-function applySettings() {
-  if (loadingScreen) {
-    loadingScreen.style.display = settings['Welcome Screen'] === 1 ? '' : 'none';
+function applyStartupOnlySettings() {
+  if (settings['Welcome Screen'] === 0) {
+    document.body.classList.add('skip-welcome');
   }
+}
 
+function applyLiveSettings(settingChanged = null) {
   if (iframe && imageBackground) {
     const backgroundMode = settings['Background Video'];
     const videoIsOff = backgroundMode === 0;
@@ -99,12 +109,8 @@ function applySettings() {
     iframe.style.display = videoIsOff ? 'none' : '';
     imageBackground.style.display = videoIsOff ? 'block' : '';
 
-    if (videoIsOff && window.crashdayHubBackgroundPlayer?.pauseVideo) {
-      window.crashdayHubBackgroundPlayer.pauseVideo();
-    }
-
-    if (!videoIsOff && window.crashdayHubBackgroundPlayer?.playVideo) {
-      window.crashdayHubBackgroundPlayer.playVideo();
+    if (settingChanged === 'Background Video') {
+      window.crashdayHubBackgroundVideoModeChanged?.(backgroundMode);
     }
   }
 }
@@ -154,13 +160,21 @@ function adjustSettingByLink(link, direction = 1) {
   const setting = link?.dataset.setting;
   if (!setting || !(setting in settings)) return;
 
+  if (isSettingDisabled(setting)) {
+    return;
+  }
+
   const nextValue = getNextSettingValue(setting, direction);
   if (nextValue === settings[setting]) {
     return;
   }
 
   settings[setting] = nextValue;
-  applySettings();
+
+  if (setting !== 'Welcome Screen') {
+    applyLiveSettings(setting);
+  }
+
   saveSettings();
   updateAllSettingLinks();
 }
@@ -171,7 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsLinks = document.querySelectorAll('.setting-link');
 
   loadSettingsFromCookies();
-  applySettings();
+  applyStartupOnlySettings();
+  applyLiveSettings();
 
   settingsLinks.forEach((link) => {
     updateSettingLink(link);
