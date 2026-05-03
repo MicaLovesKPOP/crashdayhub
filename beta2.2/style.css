@@ -67,31 +67,12 @@ a {
   outline: none;
 }
 
-
-/*
- ========== ======================== ========== 
- ========== TEXT ANIMATION CSS RULES ========== 
- ========== ======================== ========== 
-*/
-
-/* 
-This block styles the pseudo-element created for each span. 
-The pseudo-element's content is set to the value of the 'data-char' attribute of the span.
-The text stroke is applied to this pseudo-element, which is positioned absolutely behind the original text.
-This creates the effect of a text stroke that is layered below other text styles.
-*/
-
 span::before {
   content: attr(data-char);
   position: absolute;
   z-index: -1;
   -webkit-text-stroke: 0.45vh black;
 }
-
-/* 
-Selection is driven by JavaScript only. Mouse hover and browser focus update
-the selected item, but they do not create a second visual state.
-*/
 
 li.selected {
   -webkit-transform-origin: left;
@@ -114,13 +95,7 @@ li.selected a {
   opacity: 0.34;
 }
 
-
-/*
- ========== ================= ========== 
- ========== CONTEXT HELP BAR ========== 
- ========== ================= ========== 
-*/
-
+/* Context help bar */
 .context-help-bar {
   display: none;
   position: fixed;
@@ -131,7 +106,7 @@ li.selected a {
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
-  background: linear-gradient(270deg, rgba(148,0,0,0.48) 0%, rgba(148,0,0,0) 100%);
+  background: linear-gradient(270deg, rgba(var(--theme-context-help-rgb, 148, 0, 0), var(--theme-context-help-opacity, 0.48)) 0%, rgba(var(--theme-context-help-rgb, 148, 0, 0), 0) 100%);
 }
 
 .context-help-bar.visible {
@@ -157,21 +132,14 @@ li.selected a {
 }
 
 .context-help-bar.visible #context-help-text {
-  animation: contextHelpMarquee 11s linear infinite;
+  animation: contextHelpMarquee 20s linear infinite;
 }
 
 @keyframes contextHelpMarquee {
   0% { transform: translate(0, -50%); }
-  72.7% { transform: translate(calc(-100vw - 100%), -50%); }
-  100% { transform: translate(calc(-100vw - 100%), -50%); }
+  85% { transform: translate(calc(-100vw - 1em), -50%); }
+  100% { transform: translate(calc(-100vw - 1em), -50%); }
 }
-
-
-/*
- ========== ========================== ========== 
- ========== SCREEN ANIMATION CSS RULES ========== 
- ========== ========================== ========== 
-*/
 
 .loading-screen {
   background-image: url(./resources/media/titlebg.webp);
@@ -214,7 +182,6 @@ li.selected a {
   bottom: 0;
   width: 100%;
   height: 100%;
-  /*z-index: -1;*/
 }
 @-webkit-keyframes fadeIn_background {
   0% {opacity: 0;}
@@ -239,10 +206,8 @@ li.selected a {
 }
 
 iframe {
-  /* Extend it beyond the viewport... */
   width: 300%;
   height: 100%;
-  /* ...and bring it back again */
   margin-left: -100%;
 }
 
