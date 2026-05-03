@@ -10,6 +10,7 @@ const body = document.body;
 
 let activeMenuId = MAIN_MENU_ID;
 let selectedIndex = 0;
+let activeHelpText = '';
 
 function getMenu(menuId = activeMenuId) {
   return document.querySelector(menuId);
@@ -53,19 +54,28 @@ function isSubmenuLink(link) {
 function updateContextHelp(link) {
   const helpBar = document.querySelector('.context-help-bar');
   const helpText = document.querySelector('#context-help-text');
-  const text = link?.dataset.help?.trim();
+  const text = link?.dataset.help?.trim() || '';
 
   if (!helpBar || !helpText) return;
 
-  if (text) {
-    helpText.textContent = text;
-    helpBar.classList.add('visible');
-    helpBar.setAttribute('aria-hidden', 'false');
-  } else {
+  if (!text) {
+    activeHelpText = '';
     helpText.textContent = '';
     helpBar.classList.remove('visible');
     helpBar.setAttribute('aria-hidden', 'true');
+    return;
   }
+
+  if (text !== activeHelpText) {
+    activeHelpText = text;
+    helpText.textContent = text;
+    helpText.style.animation = 'none';
+    helpText.offsetHeight;
+    helpText.style.animation = '';
+  }
+
+  helpBar.classList.add('visible');
+  helpBar.setAttribute('aria-hidden', 'false');
 }
 
 function setMenuVisibility(menu, isActive) {
