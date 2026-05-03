@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@1,600&display=swap');
 
-
-/*
- ========== ================ ========== 
- ========== STATIC CSS RULES ========== 
- ========== ================ ========== 
-*/
-
 html,
 body {
   margin: 0;
@@ -129,16 +122,7 @@ li.selected a {
   text-shadow: 0.12vw 0.12vw 0 #000;
   -webkit-text-stroke: 0.035vh #fff;
   transform: translateY(-50%);
-}
-
-.context-help-bar.visible #context-help-text {
-  animation: contextHelpMarquee 20s linear infinite;
-}
-
-@keyframes contextHelpMarquee {
-  0% { transform: translate(0, -50%); }
-  85% { transform: translate(calc(-100vw - 1em), -50%); }
-  100% { transform: translate(calc(-100vw - 1em), -50%); }
+  will-change: transform;
 }
 
 .loading-screen {
