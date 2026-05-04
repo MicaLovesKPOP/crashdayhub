@@ -30,7 +30,7 @@ const settingDefinitions = {
   'Cookies': { type: 'choice', values: ['Off', 'On'] },
   'Theme': { type: 'choice', values: ['Mica Yellow'], requiresCookies: true },
   'Welcome Screen': { type: 'choice', values: ['Off', 'On'], requiresCookies: true, startupOnly: true },
-  'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Once'], requiresCookies: true },
+  'Background Video': { type: 'choice', values: ['Off', 'Loop', 'Play Once'], requiresCookies: true },
   'Effects Volume': { type: 'number', min: 0, max: 10, requiresCookies: true },
   'Music Volume': { type: 'number', min: 0, max: 10, requiresCookies: true }
 };
