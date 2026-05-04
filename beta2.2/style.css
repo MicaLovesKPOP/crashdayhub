@@ -61,8 +61,13 @@ li {
   width: -moz-fit-content;
   width: fit-content;
   list-style: none;
-  line-height: calc(1.8em + var(--menu-item-spacing-adjust));
+  line-height: 1.8;
+  margin-bottom: var(--menu-item-spacing-adjust);
   transform: scale(1, 0.96);
+}
+
+li:last-child {
+  margin-bottom: 0;
 }
 
 a {
