@@ -8,6 +8,8 @@ const MAIN_MENU_ID = '#main-menu';
 const HELP_MARQUEE_VIEWPORT_TRAVEL_MS = 17000;
 const HELP_MARQUEE_BLANK_WAIT_MS = 3000;
 const HELP_MARQUEE_GLYPH_CLEARANCE_EM = 2.8;
+const GAME_REFERENCE_WIDTH = 3840;
+const MENU_POINTER_WIDTH_AT_4K = 1130;
 
 const menus = Array.from(document.querySelectorAll(MENU_SELECTOR));
 const body = document.body;
@@ -56,6 +58,22 @@ function isSubmenuLink(link) {
   } catch {
     return false;
   }
+}
+
+function getMenuPointerWidth() {
+  return window.innerWidth * (MENU_POINTER_WIDTH_AT_4K / GAME_REFERENCE_WIDTH);
+}
+
+function getMenuItemFromPointer(event) {
+  const menu = getMenu();
+  if (!menu) return null;
+  if (event.clientX < 0 || event.clientX > getMenuPointerWidth()) return null;
+
+  const items = getMenuItems();
+  return items.find((item) => {
+    const rect = item.getBoundingClientRect();
+    return event.clientY >= rect.top && event.clientY <= rect.bottom;
+  }) ?? null;
 }
 
 function stopContextHelpMarquee() {
@@ -267,9 +285,8 @@ function bindMenuPointerControls() {
     menu.addEventListener('pointermove', (event) => {
       if (`#${menu.id}` !== activeMenuId) return;
 
-      const item = event.target.closest(MENU_ITEM_SELECTOR);
-      if (!item || !menu.contains(item)) return;
-      if (item.classList.contains('disabled') || item.getAttribute('aria-disabled') === 'true') return;
+      const item = getMenuItemFromPointer(event);
+      if (!item) return;
 
       const items = getMenuItems();
       const index = items.indexOf(item);
@@ -282,9 +299,8 @@ function bindMenuPointerControls() {
     menu.addEventListener('click', (event) => {
       if (`#${menu.id}` !== activeMenuId) return;
 
-      const item = event.target.closest(MENU_ITEM_SELECTOR);
-      if (!item || !menu.contains(item)) return;
-      if (item.classList.contains('disabled') || item.getAttribute('aria-disabled') === 'true') return;
+      const item = getMenuItemFromPointer(event);
+      if (!item) return;
 
       const items = getMenuItems();
       const index = items.indexOf(item);
