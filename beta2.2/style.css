@@ -18,7 +18,8 @@ body {
 :root {
   --ui-help-band-bottom: 10.26%;
   --ui-help-band-height: 4.7%;
-  --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2));
+  --ui-help-text-lift: 0.29%;
+  --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2) + var(--ui-help-text-lift));
 }
 
 .menu {
@@ -137,7 +138,7 @@ li.selected a {
 }
 
 .site-title-main {
-  top: 5.65%;
+  top: 6.03%;
   font-size: 6.75vh;
   letter-spacing: 0;
   word-spacing: 0.05em;
