@@ -57,6 +57,7 @@ html {
   border-bottom: 5px solid #666666;
   background-color: darkgray;
   display: inline-block;
+  vertical-align: top;
   text-align: center;
   padding: 20px;
   margin: -2px;
