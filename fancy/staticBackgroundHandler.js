@@ -4,16 +4,8 @@ const STATIC_BACKGROUND_IMAGE_EXTENSIONS = /\.(avif|webp|jpe?g|png|gif)$/i;
 
 const STATIC_BACKGROUND_SOURCES = [
   {
-    repoPath: 'fancy/resources/static-bg',
-    publicPath: './resources/static-bg/'
-  },
-  {
-    repoPath: 'fancy/static-bg',
-    publicPath: './static-bg/'
-  },
-  {
-    repoPath: 'static-bg',
-    publicPath: '../static-bg/'
+    repoPath: 'fancy/resources/media/static-bg',
+    publicPath: './resources/media/static-bg/'
   }
 ];
 
@@ -66,6 +58,10 @@ async function useRandomStaticBackground({ forceNew = false } = {}) {
   if (!imageBackground) return '';
 
   if (!selectedStaticBackgroundUrl || forceNew) {
+    if (forceNew) {
+      staticBackgroundPromise = undefined;
+    }
+
     staticBackgroundPromise = staticBackgroundPromise || pickRandomStaticBackgroundUrl();
     selectedStaticBackgroundUrl = await staticBackgroundPromise;
   }
