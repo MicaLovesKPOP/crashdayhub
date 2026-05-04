@@ -129,6 +129,7 @@ function updateContextHelp(link) {
     activeHelpText = '';
     stopContextHelpMarquee();
     helpText.textContent = '';
+    helpText.dataset.char = '';
     helpText.style.transform = 'translate(0, -50%)';
     helpBar.classList.remove('visible');
     helpBar.setAttribute('aria-hidden', 'true');
@@ -138,6 +139,7 @@ function updateContextHelp(link) {
   if (text !== activeHelpText) {
     activeHelpText = text;
     helpText.textContent = text;
+    helpText.dataset.char = text;
     helpBar.classList.add('visible');
     helpBar.setAttribute('aria-hidden', 'false');
     startContextHelpMarquee(helpText);
