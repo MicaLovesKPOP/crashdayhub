@@ -24,11 +24,13 @@ body {
   --site-title-scale-y: 1.13710;
   --site-title-shadow-x: 0.1823vw;
   --site-title-shadow-y: 0.4167vh;
+  --menu-first-item-boundary: 32.2222vh;
+  --menu-item-font-size: 3.35vh;
 }
 
 .menu {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-flow: column;
   position: absolute;
   right: 0;
@@ -48,8 +50,10 @@ body {
 }
 
 ul {
-  position: relative;
+  position: absolute;
   left: 4.94vw;
+  top: calc(var(--menu-first-item-boundary) - var(--menu-item-font-size));
+  margin: 0;
 }
 
 li {
@@ -64,7 +68,7 @@ a {
   font-family: 'Rubik', sans-serif;
   text-transform: uppercase;
   text-decoration: none;
-  font-size: 3.35vh;
+  font-size: var(--menu-item-font-size);
   font-style: italic;
   color: #B9B0AB;
   -webkit-text-stroke: 0.0724vh #B9B0AB;
