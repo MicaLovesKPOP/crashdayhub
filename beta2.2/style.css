@@ -26,6 +26,7 @@ body {
   --site-title-shadow-y: 0.4167vh;
   --menu-first-item-boundary: 32.2222vh;
   --menu-item-font-size: 3.35vh;
+  --menu-item-spacing-adjust: 0.2315vh;
 }
 
 .menu {
@@ -60,7 +61,7 @@ li {
   width: -moz-fit-content;
   width: fit-content;
   list-style: none;
-  line-height: 1.8;
+  line-height: calc(1.8em + var(--menu-item-spacing-adjust));
   transform: scale(1, 0.96);
 }
 
