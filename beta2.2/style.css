@@ -22,6 +22,8 @@ body {
   --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2) + var(--ui-help-text-lift));
   --site-title-scale-x: 1.14375;
   --site-title-scale-y: 1.13710;
+  --site-title-shadow-x: 0.1823vw;
+  --site-title-shadow-y: 0.4167vh;
 }
 
 .menu {
@@ -144,13 +146,9 @@ li.selected a {
   letter-spacing: 0;
   word-spacing: 0.05em;
   color: #fff;
-  -webkit-text-stroke: 0.08vh #fff;
+  -webkit-text-stroke: 0;
   transform: scale(var(--site-title-scale-x), var(--site-title-scale-y));
-  text-shadow:
-    0.24vw 0.24vw 0 #000,
-    -0.08vw -0.08vw 0 #000,
-    0.08vw -0.08vw 0 #000,
-    -0.08vw 0.08vw 0 #000;
+  text-shadow: var(--site-title-shadow-x) var(--site-title-shadow-y) 0 #000;
 }
 
 .site-title-subtitle {
@@ -160,9 +158,9 @@ li.selected a {
   font-size: 3.0vh;
   letter-spacing: -0.08em;
   color: rgb(var(--theme-subtitle-rgb, 255, 40, 65));
-  -webkit-text-stroke: 0.055vh rgb(var(--theme-subtitle-rgb, 255, 40, 65));
+  -webkit-text-stroke: 0;
   transform: scaleY(var(--site-title-scale-y));
-  text-shadow: 0.16vw 0.16vw 0 #000;
+  text-shadow: var(--site-title-shadow-x) var(--site-title-shadow-y) 0 #000;
 }
 
 body[data-theme="redline-red"] .site-title-subtitle {
