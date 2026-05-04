@@ -147,6 +147,10 @@ function applyLiveSettings(settingChanged = null) {
     iframe.style.display = videoIsOff ? 'none' : '';
     imageBackground.style.display = videoIsOff ? 'block' : '';
 
+    if (videoIsOff) {
+      window.crashdayHubUseRandomStaticBackground?.();
+    }
+
     if (settingChanged === 'Background Video') {
       window.crashdayHubBackgroundVideoModeChanged?.(backgroundMode);
     }
