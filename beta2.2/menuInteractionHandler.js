@@ -60,8 +60,19 @@ function isSubmenuLink(link) {
   }
 }
 
-function getMenuPointerWidth() {
+function getMenuPointerBaseWidth() {
   return window.innerWidth * (MENU_POINTER_WIDTH_AT_4K / GAME_REFERENCE_WIDTH);
+}
+
+function getMenuPointerWidth() {
+  const baseWidth = getMenuPointerBaseWidth();
+  const widestItemRightEdge = getMenuItems().reduce((maxRight, item) => {
+    const link = getLinkFromItem(item);
+    const rect = (link || item).getBoundingClientRect();
+    return Math.max(maxRight, rect.right);
+  }, 0);
+
+  return Math.max(baseWidth, widestItemRightEdge);
 }
 
 function getMenuItemFromPointer(event) {
