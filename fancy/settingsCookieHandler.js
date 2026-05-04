@@ -5,6 +5,7 @@ const imageBackground = document.querySelector('.image-background');
 
 const WELCOME_UI_READY_DELAY_MS = 7200;
 const SKIP_WELCOME_UI_READY_DELAY_MS = 450;
+const UI_VISUAL_FADE_IN_MS = 2000;
 
 const settings = {
   'Cookies': 0,
@@ -16,6 +17,7 @@ const settings = {
 };
 
 window.crashdayHubSettings = settings;
+window.crashdayHubUiVisible = false;
 window.crashdayHubUiReady = false;
 
 // Theme selection currently exposes only Mica Yellow.
@@ -115,13 +117,20 @@ function applyStartupOnlySettings() {
 }
 
 function markUiReadyAfterIntro() {
-  const delay = settings['Welcome Screen'] === 0 ? SKIP_WELCOME_UI_READY_DELAY_MS : WELCOME_UI_READY_DELAY_MS;
+  const readyDelay = settings['Welcome Screen'] === 0 ? SKIP_WELCOME_UI_READY_DELAY_MS : WELCOME_UI_READY_DELAY_MS;
+  const visibleDelay = Math.max(0, readyDelay - UI_VISUAL_FADE_IN_MS);
+
+  window.setTimeout(() => {
+    window.crashdayHubUiVisible = true;
+    document.body.classList.add('ui-visible');
+    window.crashdayHubMenuSync?.();
+  }, visibleDelay);
 
   window.setTimeout(() => {
     window.crashdayHubUiReady = true;
     document.body.classList.add('ui-ready');
     window.crashdayHubMenuSync?.();
-  }, delay);
+  }, readyDelay);
 }
 
 function applyTheme() {
