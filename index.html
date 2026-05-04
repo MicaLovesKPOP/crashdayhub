@@ -1,6 +1,30 @@
 <html>
   <head>
     <title>Crashday Hub</title>
+    <script>
+      (function () {
+        var preferenceKey = 'crashdayHubPreferredVersion';
+        var query = new URLSearchParams(window.location.search);
+        var wantsClassic = query.get('classic') === '1';
+
+        try {
+          if (wantsClassic) {
+            localStorage.setItem(preferenceKey, 'classic');
+            return;
+          }
+
+          var preferredVersion = localStorage.getItem(preferenceKey);
+          if (preferredVersion !== 'classic') {
+            localStorage.setItem(preferenceKey, 'fancy');
+            window.location.replace('./fancy/');
+          }
+        } catch (error) {
+          if (!wantsClassic) {
+            window.location.replace('./fancy/');
+          }
+        }
+      }());
+    </script>
     <link rel="StyleSheet" href="style.css" title="stylesheet" type="text/css">
     <style>
     div.button {
@@ -57,6 +81,15 @@
          </div>
    
          <div class="button">
+           <a href="https://github.com/wurunduk/blender-p3d-import-export/releases/latest">
+             <div class="box">
+               <p><img width="48px" height="48px" src="images/blender.png"/></p>
+               <b><p>.P3D PLUGIN</p></b>
+             </div>
+           </a>
+       </div>
+   
+         <div class="button">
            <a href="https://wurunduk.github.io/crashday-sdk/">
              <div class="box">
                <p><img width="48px" height="48px" src="images/sdk.png"/></p>
@@ -84,13 +117,22 @@
          </div>
    
          <div class="button">
-           <a href="https://github.com/wurunduk/blender-p3d-import-export/releases/latest">
+           <a href="https://docs.google.com/spreadsheets/d/1TEmRzVtUgzu3BlBMUQsR34I2M2X0SbWGkcE5F5IcIB8/edit?gid=0#gid=0">
              <div class="box">
-               <p><img width="48px" height="48px" src="images/blender.png"/></p>
-               <b><p>.P3D PLUGIN</p></b>
+               <p><img width="48px" height="48px" src="images/gsheet.png"/></p>
+               <b><p>ERROR DATABASE</p></b>
              </div>
            </a>
-       </div>
+         </div>
+
+         <div class="button">
+           <a href="./fancy/" onclick="try { localStorage.setItem('crashdayHubPreferredVersion', 'fancy'); } catch (error) {}">
+             <div class="box">
+               <p><img width="48px" height="48px" src="images/crashday.png"/></p>
+               <b><p>FANCY HUB</p></b>
+             </div>
+           </a>
+         </div>
     </div>
   </body>
 </html>
