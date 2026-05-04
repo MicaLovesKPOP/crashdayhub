@@ -21,6 +21,10 @@ let helpMarqueeAnimation;
 let helpMarqueeTimeout;
 let helpMarqueeToken = 0;
 
+function isUiVisible() {
+  return window.crashdayHubUiVisible === true || document.body.classList.contains('ui-visible') || isUiReady();
+}
+
 function isUiReady() {
   return window.crashdayHubUiReady === true || document.body.classList.contains('ui-ready');
 }
@@ -162,7 +166,7 @@ function updateContextHelp(link) {
 
   if (!helpBar || !helpText) return;
 
-  if (!text || !isUiReady()) {
+  if (!text || !isUiVisible()) {
     activeHelpText = '';
     stopContextHelpMarquee();
     helpText.textContent = '';
@@ -192,18 +196,21 @@ function updateSelectedItemFade(item) {
   const container = document.querySelector('.menu-container');
   if (!fade || !container || !item) return;
 
-  if (!isUiReady()) {
+  if (!isUiVisible()) {
     fade.classList.remove('visible');
     return;
   }
 
+  fade.classList.add('visible');
+
   const itemRect = item.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
-  const fadeHeight = fade.getBoundingClientRect().height || 0;
+  const fadeRect = fade.getBoundingClientRect();
+  const computedFadeHeight = Number.parseFloat(window.getComputedStyle(fade).height) || 0;
+  const fadeHeight = fadeRect.height || computedFadeHeight;
   const top = itemRect.top - containerRect.top + (itemRect.height / 2) - (fadeHeight / 2);
 
   fade.style.setProperty('--selected-item-fade-top', `${top}px`);
-  fade.classList.add('visible');
 }
 
 function setMenuVisibility(menu, isActive) {
@@ -394,6 +401,10 @@ window.addEventListener('resize', () => {
     }
   }
 });
+
+if (document.fonts?.ready) {
+  document.fonts.ready.then(() => syncSelectionToDom()).catch(() => {});
+}
 
 window.crashdayHubMenuSync = syncSelectionToDom;
 
