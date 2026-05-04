@@ -1,0 +1,44 @@
+/*
+ * CrashdayHub Fancy theme scaffold
+ *
+ * Mica Yellow is the only active selectable theme for now.
+ * The other planned themes can be added back later by restoring them in
+ * settingsCookieHandler.js and adding their theme values/assets here.
+ */
+
+:root,
+body[data-theme="mica-yellow"] {
+  --theme-name: "Mica Yellow";
+  --theme-context-help-rgb: 214, 166, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 214, 166, 0;
+  --theme-highlight-rgb: 255, 220, 0;
+}
+
+/* Planned future themes, currently not selectable:
+
+body[data-theme="redline-red"] {
+  --theme-name: "Redline Red";
+  --theme-context-help-rgb: 148, 0, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 148, 0, 0;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+body[data-theme="classic-blue"] {
+  --theme-name: "Classic Blue";
+  --theme-context-help-rgb: 0, 72, 148;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 72, 148;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+body[data-theme="ai-green"] {
+  --theme-name: "AI Green";
+  --theme-context-help-rgb: 0, 148, 78;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 148, 78;
+  --theme-highlight-rgb: 255, 204, 0;
+}
+
+*/
