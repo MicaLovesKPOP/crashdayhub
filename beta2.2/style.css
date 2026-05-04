@@ -20,6 +20,8 @@ body {
   --ui-help-band-height: 4.7%;
   --ui-help-text-lift: 0.29%;
   --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2) + var(--ui-help-text-lift));
+  --site-title-scale-x: 1.14375;
+  --site-title-scale-y: 0.87943;
 }
 
 .menu {
@@ -133,7 +135,6 @@ li.selected a {
   text-transform: uppercase;
   line-height: 0.92;
   white-space: nowrap;
-  transform: scaleY(0.96);
   transform-origin: left top;
 }
 
@@ -144,6 +145,7 @@ li.selected a {
   word-spacing: 0.05em;
   color: #fff;
   -webkit-text-stroke: 0.08vh #fff;
+  transform: scale(var(--site-title-scale-x), var(--site-title-scale-y));
   text-shadow:
     0.24vw 0.24vw 0 #000,
     -0.08vw -0.08vw 0 #000,
@@ -159,6 +161,7 @@ li.selected a {
   letter-spacing: -0.08em;
   color: rgb(var(--theme-subtitle-rgb, 255, 40, 65));
   -webkit-text-stroke: 0.055vh rgb(var(--theme-subtitle-rgb, 255, 40, 65));
+  transform: scaleY(var(--site-title-scale-y));
   text-shadow: 0.16vw 0.16vw 0 #000;
 }
 
@@ -204,10 +207,19 @@ body[data-theme="redline-red"] .site-title-subtitle {
   color: #fff;
   text-align: left;
   text-transform: none;
-  text-shadow: 0.12vw 0.12vw 0 #000;
+  text-shadow: none;
   -webkit-text-stroke: 0.035vh #fff;
   transform: translateY(-50%);
   will-change: transform;
+}
+
+#context-help-text::before {
+  content: attr(data-char);
+  position: absolute;
+  z-index: -1;
+  color: #fff;
+  text-shadow: none;
+  -webkit-text-stroke: 0.25vh #000;
 }
 
 .loading-screen {
