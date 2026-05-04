@@ -1,0 +1,56 @@
+/*
+ * CrashdayHub Fancy theme scaffold
+ *
+ * Theme-specific UI art lives under:
+ *   fancy/resources/themes/<theme-id>/titlebg.webp
+ *   fancy/resources/themes/<theme-id>/blinds2.webp
+ *
+ * Shared fallback media lives under:
+ *   fancy/resources/media/
+ */
+
+:root,
+body[data-theme="mica-yellow"] {
+  --theme-name: "Mica Yellow";
+  --theme-context-help-rgb: 214, 166, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 214, 166, 0;
+  --theme-highlight-rgb: 255, 220, 0;
+  --theme-title-bg-image: url(./resources/themes/mica-yellow/titlebg.webp);
+  --theme-blinds-image: url(./resources/themes/mica-yellow/blinds2.webp);
+}
+
+/* Planned future themes, currently not selectable:
+
+body[data-theme="redline-red"] {
+  --theme-name: "Redline Red";
+  --theme-context-help-rgb: 148, 0, 0;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 148, 0, 0;
+  --theme-highlight-rgb: 255, 204, 0;
+  --theme-subtitle-rgb: 255, 40, 65;
+  --theme-title-bg-image: url(./resources/themes/redline-red/titlebg.webp);
+  --theme-blinds-image: url(./resources/themes/redline-red/blinds2.webp);
+}
+
+body[data-theme="classic-blue"] {
+  --theme-name: "Classic Blue";
+  --theme-context-help-rgb: 0, 72, 148;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 72, 148;
+  --theme-highlight-rgb: 255, 204, 0;
+  --theme-title-bg-image: url(./resources/themes/classic-blue/titlebg.webp);
+  --theme-blinds-image: url(./resources/themes/classic-blue/blinds2.webp);
+}
+
+body[data-theme="ai-green"] {
+  --theme-name: "AI Green";
+  --theme-context-help-rgb: 0, 148, 78;
+  --theme-context-help-opacity: 0.48;
+  --theme-accent-rgb: 0, 148, 78;
+  --theme-highlight-rgb: 255, 204, 0;
+  --theme-title-bg-image: url(./resources/themes/ai-green/titlebg.webp);
+  --theme-blinds-image: url(./resources/themes/ai-green/blinds2.webp);
+}
+
+*/

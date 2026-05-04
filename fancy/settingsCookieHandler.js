@@ -30,12 +30,12 @@ const settingDefinitions = {
 };
 
 const cookieNames = {
-  'Cookies': 'crashdayHubCookies',
-  'Theme': 'crashdayHubTheme',
-  'Welcome Screen': 'crashdayHubWelcomeScreen',
-  'Background Video': 'crashdayHubBackgroundVideo',
-  'Effects Volume': 'crashdayHubEffectsVolume',
-  'Music Volume': 'crashdayHubMusicVolume'
+  'Cookies': 'crashdayHubFancyCookies',
+  'Theme': 'crashdayHubFancyTheme',
+  'Welcome Screen': 'crashdayHubFancyWelcomeScreen',
+  'Background Video': 'crashdayHubFancyBackgroundVideo',
+  'Effects Volume': 'crashdayHubFancyEffectsVolume',
+  'Music Volume': 'crashdayHubFancyMusicVolume'
 };
 
 function getDisplayValue(setting) {
