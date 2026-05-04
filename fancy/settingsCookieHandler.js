@@ -3,7 +3,7 @@
 const iframe = document.querySelector('iframe');
 const imageBackground = document.querySelector('.image-background');
 
-const WELCOME_UI_READY_DELAY_MS = 7200;
+const WELCOME_UI_READY_DELAY_MS = 5700;
 const SKIP_WELCOME_UI_READY_DELAY_MS = 450;
 const UI_VISUAL_FADE_IN_MS = 2000;
 
