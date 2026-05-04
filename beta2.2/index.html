@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=2026-05-04-5">
-    <link rel="stylesheet" href="themes/theme.css?v=2026-05-04-5">
+    <link rel="stylesheet" href="style.css?v=2026-05-04-6">
+    <link rel="stylesheet" href="themes/theme.css?v=2026-05-04-6">
     <link rel="icon" href="./resources/media/favicon.ico">
-    <script src="menuInteractionHandler.js?v=2026-05-04-5" defer></script>
-    <script src="settingsCookieHandler.js?v=2026-05-04-5" defer></script>
+    <script src="menuInteractionHandler.js?v=2026-05-04-6" defer></script>
+    <script src="settingsCookieHandler.js?v=2026-05-04-6" defer></script>
     <title>Crashday Hub</title>
 </head>
 <body>
@@ -30,7 +30,7 @@
             allow="autoplay; encrypted-media"
             src="https://www.youtube.com/embed/videoseries?list=PLn8rM6JdMMiNrtABEbSfjxSRVmvxKHo7v&autoplay=1&mute=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0&enablejsapi=1">
             </iframe>
-            <script src="youtubeIframeAPIHandler.js?v=2026-05-04-5" defer></script>
+            <script src="youtubeIframeAPIHandler.js?v=2026-05-04-6" defer></script>
         </div>
         <div class="image-background"></div>
     </div>
@@ -52,9 +52,9 @@
             <ul class="menu-list">
                 <li><a href="https://discord.me/crashday" target="_blank" rel="noreferrer noopener" data-help="Join the official Crashday community on Discord"><span data-char="Official Discord">Official Discord</span></a></li>
                 <li><a href="https://steamcommunity.com/app/508980/workshop/" target="_blank" rel="noreferrer noopener" data-help="Browse, subscribe to, and share Crashday Workshop content on Steam"><span data-char="Steam Workshop">Steam Workshop</span></a></li>
-                <li><a href="#tools-menu"><span data-char="Tools">Tools</span></a></li>
-                <li><a href="#resources-menu"><span data-char="Resources">Resources</span></a></li>
-                <li><a href="#options-menu"><span data-char="Options">Options</span></a></li>
+                <li><a data-menu-target="#tools-menu" role="button"><span data-char="Tools">Tools</span></a></li>
+                <li><a data-menu-target="#resources-menu" role="button"><span data-char="Resources">Resources</span></a></li>
+                <li><a data-menu-target="#options-menu" role="button"><span data-char="Options">Options</span></a></li>
             </ul>
         </nav>
 
@@ -77,12 +77,12 @@
 
         <nav id="options-menu" class="menu submenu">
             <ul class="menu-list">
-                <li><a href="#" class="setting-link" data-setting="Cookies" data-help="Enabling cookies stores only menu preferences locally, no tracking or analytics are used"><span data-char="Cookies: Off">Cookies: Off</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Theme"><span data-char="Theme: Mica Yellow">Theme: Mica Yellow</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Welcome Screen"><span data-char="Welcome Screen: On">Welcome Screen: On</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Background Video"><span data-char="Background Video: Loop">Background Video: Loop</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Effects Volume"><span data-char="Effects Volume: 5">Effects Volume: 5</span></a></li>
-                <li><a href="#" class="setting-link" data-setting="Music Volume"><span data-char="Music Volume: 5">Music Volume: 5</span></a></li>
+                <li><a class="setting-link" data-setting="Cookies" data-help="Enabling cookies stores only menu preferences locally, no tracking or analytics are used" role="button"><span data-char="Cookies: Off">Cookies: Off</span></a></li>
+                <li><a class="setting-link" data-setting="Theme" role="button"><span data-char="Theme: Mica Yellow">Theme: Mica Yellow</span></a></li>
+                <li><a class="setting-link" data-setting="Welcome Screen" role="button"><span data-char="Welcome Screen: On">Welcome Screen: On</span></a></li>
+                <li><a class="setting-link" data-setting="Background Video" role="button"><span data-char="Background Video: Loop">Background Video: Loop</span></a></li>
+                <li><a class="setting-link" data-setting="Effects Volume" role="button"><span data-char="Effects Volume: 5">Effects Volume: 5</span></a></li>
+                <li><a class="setting-link" data-setting="Music Volume" role="button"><span data-char="Music Volume: 5">Music Volume: 5</span></a></li>
             </ul>
         </nav>
     </div>
