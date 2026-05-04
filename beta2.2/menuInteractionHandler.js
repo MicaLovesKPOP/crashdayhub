@@ -150,6 +150,20 @@ function updateContextHelp(link) {
   helpBar.setAttribute('aria-hidden', 'false');
 }
 
+function updateSelectedItemFade(item) {
+  const fade = document.querySelector('.selected-item-fade');
+  const container = document.querySelector('.menu-container');
+  if (!fade || !container || !item) return;
+
+  const itemRect = item.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  const fadeHeight = fade.getBoundingClientRect().height || 0;
+  const top = itemRect.top - containerRect.top + (itemRect.height / 2) - (fadeHeight / 2);
+
+  fade.style.setProperty('--selected-item-fade-top', `${top}px`);
+  fade.classList.add('visible');
+}
+
 function setMenuVisibility(menu, isActive) {
   menu.style.display = isActive ? 'flex' : 'none';
   menu.setAttribute('aria-hidden', isActive ? 'false' : 'true');
@@ -162,16 +176,7 @@ function setMenuVisibility(menu, isActive) {
 
   if (!isActive) {
     menu.querySelectorAll(MENU_ITEM_SELECTOR).forEach((item) => item.classList.remove('selected'));
-    return;
   }
-
-  menu.style.justifyContent = 'center';
-  menu.style.flexDirection = 'column';
-  menu.style.position = 'absolute';
-  menu.style.right = '0';
-  menu.style.left = '0';
-  menu.style.top = '0';
-  menu.style.bottom = '0';
 }
 
 function syncSelectionToDom() {
@@ -186,6 +191,7 @@ function syncSelectionToDom() {
 
   const items = getMenuItems();
   if (items.length === 0) {
+    document.querySelector('.selected-item-fade')?.classList.remove('visible');
     updateContextHelp(null);
     return;
   }
@@ -193,6 +199,7 @@ function syncSelectionToDom() {
   selectedIndex = Math.max(0, Math.min(selectedIndex, items.length - 1));
   const selectedItem = items[selectedIndex];
   selectedItem.classList.add('selected');
+  updateSelectedItemFade(selectedItem);
 
   const selectedLink = getLinkFromItem(selectedItem);
   selectedLink?.focus({ preventScroll: true });
@@ -329,6 +336,8 @@ function bindKeyboardControls() {
 }
 
 window.addEventListener('resize', () => {
+  syncSelectionToDom();
+
   if (activeHelpText) {
     const helpText = document.querySelector('#context-help-text');
     if (helpText) {
