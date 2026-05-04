@@ -3,6 +3,9 @@
 const iframe = document.querySelector('iframe');
 const imageBackground = document.querySelector('.image-background');
 
+const WELCOME_UI_READY_DELAY_MS = 7200;
+const SKIP_WELCOME_UI_READY_DELAY_MS = 450;
+
 const settings = {
   'Cookies': 0,
   'Theme': 0,
@@ -13,6 +16,7 @@ const settings = {
 };
 
 window.crashdayHubSettings = settings;
+window.crashdayHubUiReady = false;
 
 // Theme selection currently exposes only Mica Yellow.
 // When more themes are re-enabled, keep the visible order alphabetical:
@@ -110,6 +114,16 @@ function applyStartupOnlySettings() {
   }
 }
 
+function markUiReadyAfterIntro() {
+  const delay = settings['Welcome Screen'] === 0 ? SKIP_WELCOME_UI_READY_DELAY_MS : WELCOME_UI_READY_DELAY_MS;
+
+  window.setTimeout(() => {
+    window.crashdayHubUiReady = true;
+    document.body.classList.add('ui-ready');
+    window.crashdayHubMenuSync?.();
+  }, delay);
+}
+
 function applyTheme() {
   document.body.dataset.theme = themeIds[settings.Theme] ?? themeIds[0];
 }
@@ -202,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSettingsFromCookies();
   applyStartupOnlySettings();
   applyLiveSettings();
+  markUiReadyAfterIntro();
 
   settingsLinks.forEach((link) => {
     updateSettingLink(link);
