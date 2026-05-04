@@ -21,6 +21,10 @@ let helpMarqueeAnimation;
 let helpMarqueeTimeout;
 let helpMarqueeToken = 0;
 
+function isUiReady() {
+  return window.crashdayHubUiReady === true || document.body.classList.contains('ui-ready');
+}
+
 function getMenu(menuId = activeMenuId) {
   return document.querySelector(menuId);
 }
@@ -158,7 +162,7 @@ function updateContextHelp(link) {
 
   if (!helpBar || !helpText) return;
 
-  if (!text) {
+  if (!text || !isUiReady()) {
     activeHelpText = '';
     stopContextHelpMarquee();
     helpText.textContent = '';
@@ -188,6 +192,11 @@ function updateSelectedItemFade(item) {
   const container = document.querySelector('.menu-container');
   if (!fade || !container || !item) return;
 
+  if (!isUiReady()) {
+    fade.classList.remove('visible');
+    return;
+  }
+
   const itemRect = item.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
   const fadeHeight = fade.getBoundingClientRect().height || 0;
@@ -204,7 +213,7 @@ function setMenuVisibility(menu, isActive) {
   menu.querySelectorAll(MENU_LINK_SELECTOR).forEach((link) => {
     const item = link.closest(MENU_ITEM_SELECTOR);
     const isDisabled = item?.classList.contains('disabled') || item?.getAttribute('aria-disabled') === 'true';
-    link.tabIndex = isActive && !isDisabled ? 0 : -1;
+    link.tabIndex = isActive && !isDisabled && isUiReady() ? 0 : -1;
   });
 
   if (!isActive) {
@@ -235,7 +244,9 @@ function syncSelectionToDom() {
   updateSelectedItemFade(selectedItem);
 
   const selectedLink = getLinkFromItem(selectedItem);
-  selectedLink?.focus({ preventScroll: true });
+  if (isUiReady()) {
+    selectedLink?.focus({ preventScroll: true });
+  }
   updateContextHelp(selectedLink);
 }
 
@@ -299,6 +310,7 @@ function activateSelectedItem() {
 function bindMenuPointerControls() {
   menus.forEach((menu) => {
     menu.addEventListener('pointermove', (event) => {
+      if (!isUiReady()) return;
       if (`#${menu.id}` !== activeMenuId) return;
 
       const item = getMenuItemFromPointer(event);
@@ -313,6 +325,7 @@ function bindMenuPointerControls() {
     });
 
     menu.addEventListener('click', (event) => {
+      if (!isUiReady()) return;
       if (`#${menu.id}` !== activeMenuId) return;
 
       const item = getMenuItemFromPointer(event);
@@ -332,6 +345,10 @@ function bindMenuPointerControls() {
 function bindKeyboardControls() {
   document.addEventListener('keydown', (event) => {
     if (!['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', 'Escape'].includes(event.key)) return;
+    if (!isUiReady()) {
+      event.preventDefault();
+      return;
+    }
 
     if (event.key === 'Escape') {
       if (activeMenuId !== MAIN_MENU_ID) {
