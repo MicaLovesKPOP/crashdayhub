@@ -206,9 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
   settingsLinks.forEach((link) => {
     updateSettingLink(link);
 
+    // Menu activation is owned by menuInteractionHandler.js so mouse, keyboard,
+    // and gamepad-like navigation all go through the same path. This listener
+    // only prevents the raw href="#" fallback from changing the URL/scroll.
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      adjustSettingByLink(event.currentTarget, 1);
     });
   });
 
