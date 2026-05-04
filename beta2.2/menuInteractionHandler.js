@@ -46,18 +46,22 @@ function isSettingLink(link) {
   return Boolean(link?.classList.contains('setting-link'));
 }
 
-function isSubmenuLink(link) {
-  const href = link?.getAttribute('href');
+function getSubmenuTarget(link) {
+  const target = link?.dataset.menuTarget || link?.getAttribute('href');
 
-  if (!href || !href.startsWith('#') || href.length <= 1) {
-    return false;
+  if (!target || !target.startsWith('#') || target.length <= 1) {
+    return '';
   }
 
   try {
-    return Boolean(document.querySelector(href));
+    return document.querySelector(target) ? target : '';
   } catch {
-    return false;
+    return '';
   }
+}
+
+function isSubmenuLink(link) {
+  return Boolean(getSubmenuTarget(link));
 }
 
 function getMenuPointerBaseWidth() {
@@ -275,8 +279,9 @@ function activateLink(link) {
     return;
   }
 
-  if (isSubmenuLink(link)) {
-    showMenu(link.getAttribute('href'), 0);
+  const submenuTarget = getSubmenuTarget(link);
+  if (submenuTarget) {
+    showMenu(submenuTarget, 0);
     return;
   }
 
