@@ -17,7 +17,7 @@ body {
 
 :root {
   --ui-help-band-bottom: 10.26%;
-  --ui-help-band-height: 4.7%;
+  --ui-help-band-height: 4.0056%;
   --ui-help-text-lift: 0.29%;
   --ui-help-text-center-bottom: calc(var(--ui-help-band-bottom) + (var(--ui-help-band-height) / 2) + var(--ui-help-text-lift));
   --site-title-scale-x: 1.14375;
