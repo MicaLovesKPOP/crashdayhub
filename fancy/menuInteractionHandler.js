@@ -29,6 +29,15 @@ function isUiReady() {
   return window.crashdayHubUiReady === true || document.body.classList.contains('ui-ready');
 }
 
+function rememberPreferredVersion(link) {
+  const preferredVersion = link?.dataset.preferredVersion;
+  if (!preferredVersion) return;
+
+  try {
+    localStorage.setItem('crashdayHubPreferredVersion', preferredVersion);
+  } catch (error) {}
+}
+
 function getMenu(menuId = activeMenuId) {
   return document.querySelector(menuId);
 }
@@ -306,6 +315,7 @@ function activateLink(link) {
   const href = link.getAttribute('href');
 
   if (href && href !== '#') {
+    rememberPreferredVersion(link);
     window.open(href, link.target || '_self', link.rel || undefined);
   }
 }
