@@ -6,14 +6,15 @@
   <title>Torque Curve Editor | CrashdayHub</title>
   <meta name="description" content="Edit, import, graph, and export torque curves for Crashday, Assetto Corsa, BeamNG.drive, and generic LUT/CSV formats.">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="workbench.css">
 </head>
 <body>
 <div class="app-shell">
   <header class="app-header">
     <div class="title-block">
-      <div class="eyebrow">CRV / LUT curve editor</div>
+      <div class="eyebrow">Game modding curve workbench</div>
       <h1>Torque Curve Editor</h1>
-      <p>Edit torque curves by text, file import, mouse dragging, or keyboard nudging.</p>
+      <p>Import, edit, validate, and export torque curves for Crashday, Assetto Corsa, BeamNG.drive, and generic LUT/CSV workflows.</p>
     </div>
 
     <div class="top-actions">
@@ -26,7 +27,7 @@
       <div class="panel-header">
         <div>
           <h2>Input</h2>
-          <p>Paste, type, drag-drop, or import curve data.</p>
+          <p>Paste, type, drag-drop, or import curve data. Assisted mode will repair safe issues and report what changed.</p>
         </div>
 
         <div class="panel-actions">
@@ -54,8 +55,7 @@
       </div>
 
       <div class="textarea-wrap">
-        <textarea id="powerlut" spellcheck="false">
-0|0
+        <textarea id="powerlut" spellcheck="false">0|0
 1000|70
 2000|270
 3000|630
@@ -65,21 +65,21 @@
 7000|580
 8000|520
 9000|500
-10000|0
-</textarea>
+10000|0</textarea>
       </div>
 
       <div class="status-stack">
         <div id="parse-status" class="status-line"></div>
         <div id="import-status" class="status-line import-status"></div>
+        <div id="assist-log" class="assist-log" aria-live="polite"></div>
       </div>
     </section>
 
     <section class="panel graph-panel">
       <div class="panel-header graph-header">
         <div>
-          <h2>Result</h2>
-          <p>Visual display settings do not rewrite the source data.</p>
+          <h2>Curve editor</h2>
+          <p>The graph is the main editing surface. Display units never rewrite the source curve.</p>
         </div>
 
         <div class="graph-toolbar">
@@ -111,6 +111,11 @@
             </label>
           </div>
 
+          <div class="graph-action-row">
+            <button id="add-point" class="secondary-button" type="button">Add point</button>
+            <button id="delete-point" class="secondary-button danger" type="button">Delete selected</button>
+          </div>
+
           <div id="selected-point" class="selected-point">No point selected</div>
         </div>
       </div>
@@ -118,17 +123,30 @@
       <div class="chart-frame">
         <div id="result-torque"></div>
       </div>
+
+      <div id="curve-summary" class="curve-summary" aria-live="polite"></div>
     </section>
 
     <section class="panel output-panel">
       <div class="panel-header">
         <div>
           <h2>Output</h2>
-          <p>Copy the edited curve back out in a target format.</p>
+          <p>Pick a game preset or manual format, inspect the live preview, then copy.</p>
         </div>
       </div>
 
       <div class="control-grid output-control-grid">
+        <label class="control-field">
+          <span>Game preset</span>
+          <select id="game-preset">
+            <option value="manual">Manual / keep current</option>
+            <option value="crashday">Crashday .crv</option>
+            <option value="assetto">Assetto Corsa power.lut</option>
+            <option value="beamng">BeamNG.drive JBeam</option>
+            <option value="csv">Generic CSV</option>
+          </select>
+        </label>
+
         <label class="control-field">
           <span>Format</span>
           <select id="output-format">
@@ -138,7 +156,7 @@
             <option value="csv">RPM,Torque CSV (BeamNG include CSV / generic)</option>
             <option value="beamng-jbeam">BeamNG JBeam torque table (BeamNG.drive)</option>
             <option value="json-array">JSON array [[rpm, torque], ...]</option>
-            <option value="json-objects">JSON objects [{"rpm":1000,"torqueNm":280}, ...]</option>
+            <option value="json-objects">JSON objects [{&quot;rpm&quot;:1000,&quot;torqueNm&quot;:280}, ...]</option>
           </select>
         </label>
 
@@ -155,6 +173,7 @@
       </div>
 
       <div id="output-status" class="status-line output-status"></div>
+      <pre id="output-preview" class="output-preview" tabindex="0" aria-label="Live output preview"></pre>
     </section>
 
     <section class="panel help-panel">
@@ -188,15 +207,8 @@
         </article>
 
         <article class="help-card">
-          <h3>Import support</h3>
-          <p>Raw LUT/CRV files, simple CSV/text, and larger JSON files with embedded torque curves.</p>
-          <div class="chip-row">
-            <span class="chip">.crv</span>
-            <span class="chip">.lut</span>
-            <span class="chip">.txt</span>
-            <span class="chip">.csv</span>
-            <span class="chip">.json</span>
-          </div>
+          <h3>Assisted mode</h3>
+          <p>Safe repairs are automatic: sorting, clamping negative values, conservative swapped-pair fixes, and duplicate-RPM cleanup. Every repair is shown in the input log.</p>
         </article>
 
         <article class="help-card">
@@ -208,5 +220,6 @@
   </main>
 </div>
   <script src="app.js"></script>
+  <script src="workbench.js"></script>
 </body>
 </html>
