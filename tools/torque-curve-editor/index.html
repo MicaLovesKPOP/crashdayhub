@@ -1,49 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CrashdayHub torque curve editor for CRV, LUT, CSV, JSON and BeamNG-style torque tables.">
-  <title>Torque Curve Editor · CrashdayHub</title>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Torque Curve Editor | CrashdayHub</title>
+  <meta name="description" content="Edit, import, graph, and export torque curves for Crashday, Assetto Corsa, BeamNG.drive, and generic LUT/CSV formats.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="shell">
-    <header class="head">
-      <div>
-        <div class="eyebrow">CrashdayHub tool</div>
-        <h1>Torque Curve Editor</h1>
-        <p>Edit torque curves visually, convert units, and export for Crashday, Assetto Corsa, CSV, JSON, or BeamNG-style tables.</p>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="title-block">
+      <div class="eyebrow">CRV / LUT curve editor</div>
+      <h1>Torque Curve Editor</h1>
+      <p>Edit torque curves by text, file import, mouse dragging, or keyboard nudging.</p>
+    </div>
+
+    <div class="top-actions">
+      <button id="theme-toggle" class="theme-toggle" type="button">Theme</button>
+    </div>
+  </header>
+
+  <main class="app-grid">
+    <section class="panel input-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Input</h2>
+          <p>Paste, type, drag-drop, or import curve data.</p>
+        </div>
+
+        <div class="panel-actions">
+          <label class="file-button" for="file-import">Import file</label>
+          <input
+            id="file-import"
+            class="visually-hidden"
+            type="file"
+            accept=".crv,.lut,.txt,.csv,.json,application/json,text/plain"
+          >
+        </div>
       </div>
-      <div class="actions">
-        <a class="btn" href="../../fancy/">Crashday Hub</a>
-        <a class="btn" href="../../">Classic Hub</a>
+
+      <div class="input-settings-card">
+        <label class="control-field">
+          <span>Input torque</span>
+          <select id="input-torque-unit">
+            <option value="auto">Auto / explicit units / Nm fallback</option>
+            <option value="nm">Assume Nm</option>
+            <option value="lbft">Assume lb-ft</option>
+            <option value="kgm">Assume kgm</option>
+          </select>
+        </label>
+        <p>Used for unlabelled pasted/imported torque values. Explicit units in the text still win.</p>
       </div>
-    </header>
 
-    <section class="grid">
-      <article class="card input">
-        <div class="panel">
-          <div class="ph">
-            <div>
-              <h2>Input</h2>
-              <p>Paste RPM/torque data or import a file.</p>
-            </div>
-            <label class="filebtn">Import file<input id="file" class="hidden" type="file" accept=".crv,.lut,.txt,.csv,.json"></label>
-          </div>
-
-          <div class="field" style="margin-bottom:10px">
-            <span>Input torque assumption</span>
-            <select id="inUnit">
-              <option value="auto">Auto / explicit units / Nm fallback</option>
-              <option value="nm">Assume Nm</option>
-              <option value="lbft">Assume lb-ft</option>
-              <option value="kgm">Assume kgm</option>
-            </select>
-          </div>
-
-          <div class="tw"><textarea id="src" spellcheck="false">0|0
+      <div class="textarea-wrap">
+        <textarea id="powerlut" spellcheck="false">
+0|0
 1000|70
 2000|270
 3000|630
@@ -53,87 +65,148 @@
 7000|580
 8000|520
 9000|500
-10000|0</textarea></div>
-          <div id="parse" class="status"></div>
-        </div>
-      </article>
+10000|0
+</textarea>
+      </div>
 
-      <article class="card graph">
-        <div class="panel">
-          <div class="graphbar">
-            <div>
-              <h2>Graph</h2>
-              <div id="selected" class="pill">No point selected</div>
-            </div>
-            <div class="unitrow">
-              <select id="mode">
-                <option value="spline">Smooth curve</option>
-                <option value="line">Linear curve</option>
-              </select>
-              <select id="torqueUnit">
-                <option value="nm">Torque: Nm</option>
-                <option value="lbft">Torque: lb-ft</option>
-                <option value="kgm">Torque: kgm</option>
-              </select>
-              <select id="powerUnit">
-                <option value="bhp">Power: bhp</option>
-                <option value="ps">Power: PS</option>
-                <option value="kw">Power: kW</option>
-              </select>
-            </div>
-          </div>
-          <div id="chart" class="chart"></div>
-        </div>
-      </article>
+      <div class="status-stack">
+        <div id="parse-status" class="status-line"></div>
+        <div id="import-status" class="status-line import-status"></div>
+      </div>
+    </section>
 
-      <article class="card output">
-        <div class="panel">
-          <div class="ph">
-            <div>
-              <h2>Output</h2>
-              <p>Copy the curve in the selected format.</p>
-            </div>
-          </div>
-          <div class="controls">
-            <div class="field">
-              <span>Format</span>
-              <select id="outFmt">
-                <option value="lut">RPM|Torque LUT</option>
-                <option value="crv">Crashday .crv</option>
-                <option value="csv">CSV</option>
-                <option value="beamng">BeamNG JBeam table</option>
-                <option value="json">JSON objects</option>
+    <section class="panel graph-panel">
+      <div class="panel-header graph-header">
+        <div>
+          <h2>Result</h2>
+          <p>Visual display settings do not rewrite the source data.</p>
+        </div>
+
+        <div class="graph-toolbar">
+          <div class="unit-controls">
+            <label class="mini-control">
+              <span>Curve</span>
+              <select id="curve-mode">
+                <option value="spline">Smooth</option>
+                <option value="line">Linear</option>
               </select>
-            </div>
-            <div class="field">
-              <span>Torque unit</span>
-              <select id="outUnit">
+            </label>
+
+            <label class="mini-control">
+              <span>Torque</span>
+              <select id="torque-display-unit">
                 <option value="nm">Nm</option>
                 <option value="lbft">lb-ft</option>
                 <option value="kgm">kgm</option>
               </select>
-            </div>
-            <button id="copy" class="btn" type="button">Copy</button>
-          </div>
-          <div id="outStatus" class="status"></div>
-        </div>
-      </article>
+            </label>
 
-      <article class="card help">
-        <div class="panel helpgrid">
-          <div class="helpbox">
-            <h3>Mouse editing</h3>
-            <p>Drag a torque point up/down. Hold <b>Shift</b> to move RPM + torque. Hold <b>Alt</b> to move RPM only.</p>
-            <div class="chips"><span class="chip">Drag = torque</span><span class="chip">Shift = free move</span><span class="chip">Alt = RPM only</span></div>
+            <label class="mini-control">
+              <span>Power</span>
+              <select id="power-display-unit">
+                <option value="bhp">bhp</option>
+                <option value="ps">PS</option>
+                <option value="kw">kW</option>
+              </select>
+            </label>
           </div>
-          <div class="helpbox">
-            <h3>Crashday output</h3>
-            <p>.crv export uses a complete 1000-RPM grid starting at 0 RPM and fills missing values by linear interpolation.</p>
-          </div>
+
+          <div id="selected-point" class="selected-point">No point selected</div>
         </div>
-      </article>
+      </div>
+
+      <div class="chart-frame">
+        <div id="result-torque"></div>
+      </div>
+    </section>
+
+    <section class="panel output-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Output</h2>
+          <p>Copy the edited curve back out in a target format.</p>
+        </div>
+      </div>
+
+      <div class="control-grid output-control-grid">
+        <label class="control-field">
+          <span>Format</span>
+          <select id="output-format">
+            <option value="same-as-imported">Same as imported</option>
+            <option value="rpm-pipe-torque">RPM|Torque Nm (Assetto Corsa power.lut)</option>
+            <option value="torque-hash-rpm">Torque # RPM = RPM (Crashday .crv, 1000-RPM grid)</option>
+            <option value="csv">RPM,Torque CSV (BeamNG include CSV / generic)</option>
+            <option value="beamng-jbeam">BeamNG JBeam torque table (BeamNG.drive)</option>
+            <option value="json-array">JSON array [[rpm, torque], ...]</option>
+            <option value="json-objects">JSON objects [{"rpm":1000,"torqueNm":280}, ...]</option>
+          </select>
+        </label>
+
+        <label class="control-field">
+          <span>Torque unit</span>
+          <select id="output-torque-unit">
+            <option value="nm">Nm</option>
+            <option value="lbft">lb-ft</option>
+            <option value="kgm">kgm</option>
+          </select>
+        </label>
+
+        <button id="copy-output" class="copy-button" type="button">Copy output</button>
+      </div>
+
+      <div id="output-status" class="status-line output-status"></div>
+    </section>
+
+    <section class="panel help-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Controls & formats</h2>
+          <p>Quick reference for editing and importing curves.</p>
+        </div>
+      </div>
+
+      <div class="help-grid">
+        <article class="help-card">
+          <h3>Mouse</h3>
+          <div class="shortcut-grid">
+            <span>Drag point</span><b>Torque only</b>
+            <span>Shift + drag</span><b>RPM + torque</b>
+            <span>Alt + drag</span><b>RPM only</b>
+          </div>
+        </article>
+
+        <article class="help-card">
+          <h3>Keyboard</h3>
+          <div class="shortcut-grid">
+            <span>Click point</span><b>Select</b>
+            <span>Arrow keys</span><b>Move</b>
+            <span>Shift</span><b>Large step</b>
+            <span>Ctrl</span><b>Medium step</b>
+            <span>Alt</span><b>Tiny step</b>
+            <span>Escape</span><b>Reset point</b>
+          </div>
+        </article>
+
+        <article class="help-card">
+          <h3>Import support</h3>
+          <p>Raw LUT/CRV files, simple CSV/text, and larger JSON files with embedded torque curves.</p>
+          <div class="chip-row">
+            <span class="chip">.crv</span>
+            <span class="chip">.lut</span>
+            <span class="chip">.txt</span>
+            <span class="chip">.csv</span>
+            <span class="chip">.json</span>
+          </div>
+        </article>
+
+        <article class="help-card">
+          <h3>Crashday output</h3>
+          <p>Always exports from 0 RPM in uninterrupted 1000-RPM steps. Missing steps are filled by linear interpolation.</p>
+        </article>
+      </div>
     </section>
   </main>
+</div>
   <script src="app.js"></script>
 </body>
 </html>
